@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public abstract class Character extends Dimensions implements Action {
+public abstract class Character extends Element implements Action {
 	
 	private String name;
 	private int color;
@@ -21,8 +21,16 @@ public abstract class Character extends Dimensions implements Action {
 	}
 	
 	public void drawCharacter() {
-		window.fill(color);
-		window.circle(yPos, yPos, length);
+		getWindow().fill(color);
+		getWindow().circle(getyPos(), getyPos(), getLength());
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

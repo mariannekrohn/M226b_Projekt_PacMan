@@ -1,6 +1,6 @@
 package view;
 
-import model.Dimensions;
+import model.Element;
 import processing.core.PApplet;
 
 /**
@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author Schule
  *
  */
-public class MazeElement extends Dimensions {
+public class MazeElement extends Element {
 
 	/**
 	 * Konstruktor
@@ -27,8 +27,8 @@ public class MazeElement extends Dimensions {
 	 * Füllt die einzelnen Felder auf dem Spielfeld aus.
 	 */
 	public void display() {
-		window.fill(255, 0, 0);
-		window.rect(yPos, xPos, length, height);
+		getWindow().fill(255, 0, 0);
+		getWindow().rect(getyPos(), getxPos(), getLength(), getHeight());
 	}
 	
 

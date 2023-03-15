@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public class Item extends Dimensions {
+public class Item extends Element {
 	
 	private String type;
 	private int value;

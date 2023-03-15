@@ -1,6 +1,7 @@
 package controller;
 
 import model.PacMan;
+import model.PacMan2;
 import processing.core.PApplet;
 import view.MazeElement;
 
@@ -16,11 +17,11 @@ public class GameController extends PApplet {
 	private int col;
 	private int row;
 
-	private PacMan player;
+//	PacMan player;
+	PacMan2 player;
 	PApplet window;
 
-	private int[][] maze = {
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0 },
 			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
 			{ 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -39,16 +40,20 @@ public class GameController extends PApplet {
 			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 },
 			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
 			{ 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-	};
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
 	}
 
-	
 	// Processing-Methoden
+//	public void setup() {
+//		player = new PacMan(this, 200, 300, 25, 25, "Pac Man", 0xFFFFFF00);
+//
+//	}
+	
 	public void setup() {
+		player = new PacMan2(this);
 
 	}
 
@@ -64,8 +69,8 @@ public class GameController extends PApplet {
 
 	public void draw() {
 		background(0);
-		displayMaze();
-		initializeStartScreen();
+//		displayMaze();
+		player.drawCharacter();
 	}
 
 	/**
@@ -96,10 +101,10 @@ public class GameController extends PApplet {
 		noLoop();
 	}
 
-	public void initializeStartScreen() {
-		player = new PacMan(this);
-		player.drawCharacter();
-	}
+//	public void initializeStartScreen() {
+//		
+//		
+//	}
 
 	/**
 	 * Stellt sicher, dass Figuren sich nur innerhalb des Labyrinths bewegen können
@@ -109,21 +114,22 @@ public class GameController extends PApplet {
 	}
 
 	public void keyPressed() {
-		switch (keyCode) {
-		case UP:
-			player.moveUp();
-			break;
-		case DOWN:
-			player.moveDown();
-			break;
-		case RIGHT:
-			player.moveRight();
-			break;
-		case LEFT:
-			player.moveLeft();
-			break;
+		if(key == CODED)
+			switch (keyCode) {
+			case UP:
+				player.moveUp();
+				break;
+			case DOWN:
+				player.moveDown();
+				break;
+			case RIGHT:
+				player.moveRight();
+				break;
+			case LEFT:
+				player.moveLeft();
+				break;
 
-		}
+			}
 	}
 
 }

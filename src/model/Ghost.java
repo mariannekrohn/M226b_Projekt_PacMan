@@ -20,9 +20,30 @@ public class Ghost extends Character {
 	 * verfolgen, sobald er in ihre Nähe kommt.
 	 */
 	@Override
-	public void move() {
+	public void moveUp() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void moveDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveRight() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveLeft() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 
 }
