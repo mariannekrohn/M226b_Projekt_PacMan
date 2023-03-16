@@ -10,11 +10,12 @@ import processing.core.PApplet;
  */
 public abstract class Character extends Element implements Action {
 	
+
 	private String name;
 	private int color;
 	
-	public Character(PApplet window, int xPos, int yPos, int length, int height, String name, int color) {
-		super(window, xPos, yPos, length, height);
+	public Character(PApplet window, int xPos, int yPos, int length, int width, String name, int color) {
+		super(window, xPos, yPos, length, width);
 		this.name = name;
 		this.color = color;
 	}
@@ -22,7 +23,7 @@ public abstract class Character extends Element implements Action {
 	
 	public void drawCharacter() {
 		getWindow().fill(color);
-		getWindow().circle(xPos, yPos, length);
+		getWindow().ellipse(xPos, yPos, length, length);
 	}
 
 	public String getName() {

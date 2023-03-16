@@ -10,7 +10,7 @@ import processing.core.PApplet;
  *
  */
 public class Fruit extends Item implements Action{
-	
+
 	private ArrayList fruit;
 	
 	/**
@@ -19,9 +19,10 @@ public class Fruit extends Item implements Action{
 	 * @param value Wert des Gegenstandes
 	 * @param fruit Art der Frucht
 	 */
-	public Fruit(PApplet window, int xPos, int yPos, int length, int height, String type, int value, ArrayList fruit) {
-		super(window, xPos, yPos, length, height, type, value);
-		this.fruit = fruit;
+
+	public Fruit(PApplet window, int xPos, int yPos, int length, int width, String type, int value) {
+		super(window, xPos, yPos, length, width, type, value);
+		
 	}
 
 	/**

@@ -17,14 +17,11 @@ public class Item extends Element {
 	 * @param type Art des Gegenstandes
 	 * @param value Punkte-Wert des Gegenstandes
 	 */
-
-	
-	public Item(PApplet window, int xPos, int yPos, int length, int height, String type, int value) {
-		super(window, xPos, yPos, length, height);
+	public Item(PApplet window, int xPos, int yPos, int length, int width, String type, int value) {
+		super(window, xPos, yPos, length, width);
 		this.type = type;
 		this.value = value;
 	}
-
 
 	
 	/**

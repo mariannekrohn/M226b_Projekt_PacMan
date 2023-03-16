@@ -14,17 +14,18 @@ public class PacMan extends Character {
 	private int score;
 	private int lives;
 
-
-	public PacMan(PApplet window, int xPos, int yPos, int length, int height, String name, int color) {
-		super(window, xPos, yPos, length, height, name, color);
+	
+	public PacMan(PApplet window, int xPos, int yPos, int length, int width, String name, int color) {
+		super(window, xPos, yPos, length, width, name, color);
 		this.score = 0;
 		this.lives = 3;
+		
 	}
+
 
 	@Override
 	public void moveUp() {
 		yPos -= 10;
-		System.out.println("x: " + xPos + ", y: " + yPos);
 	}
 
 	/**
@@ -33,19 +34,16 @@ public class PacMan extends Character {
 	@Override
 	public void moveDown() {
 		yPos += 10;
-		System.out.println("x: " + xPos + ", y: " + yPos);
 		}
 
 	@Override
 	public void moveRight() {
 		xPos += 10;
-		System.out.println("x: " + xPos + ", y: " + yPos);
 		}
 
 	@Override
 	public void moveLeft() {
 		xPos -= 10;
-		System.out.println("x: " + xPos + ", y: " + yPos);
 	}
 	
 

@@ -13,7 +13,7 @@ public abstract class Element extends PApplet{
 	protected int xPos;
 	protected int yPos;
 	protected int length;
-	protected int height;
+	protected int width;
 	private PApplet window;
 	
 	/**
@@ -24,12 +24,12 @@ public abstract class Element extends PApplet{
 	 * @param length Breite des Elements
 	 * @param height Höhe des Elements
 	 */
-	public Element(PApplet window, int xPos, int yPos, int length, int height) {
+	public Element(PApplet window, int xPos, int yPos, int length, int width) {
 		this.window = window;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.length = length;
-		this.height = height;
+		this.width = width;
 	}
 
 

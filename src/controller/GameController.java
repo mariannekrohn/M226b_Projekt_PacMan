@@ -1,7 +1,6 @@
 package controller;
 
 import model.PacMan;
-import model.PacMan2;
 import processing.core.PApplet;
 import view.MazeElement;
 
@@ -18,7 +17,6 @@ public class GameController extends PApplet {
 	private int row;
 
 	PacMan player;
-//	PacMan2 player;
 	PApplet window;
 
 	private int[][] maze = { 
@@ -48,14 +46,8 @@ public class GameController extends PApplet {
 		PApplet.main("controller.GameController");
 	}
 
-	// Processing-Methoden
-//	public void setup() {
-//		player = new PacMan(this, 200, 300, 25, 25, "Pac Man", 0xFFFFFF00);
-//
-//	}
 	
 	public void setup() {
-//		player = new PacMan2(this);
 		player = new PacMan(this, 200, 300, 25, 25, "Pac Man", 0xFFFFFF00);
 
 	}

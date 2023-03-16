@@ -28,7 +28,7 @@ public class MazeElement extends Element {
 	 */
 	public void display() {
 		getWindow().fill(255, 0, 0);
-		getWindow().rect(xPos, yPos, length, width);
+		getWindow().rect(yPos, xPos, length, width);
 	}
 	
 
