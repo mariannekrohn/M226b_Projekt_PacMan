@@ -7,29 +7,32 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public class Item extends Element {
+public abstract class Item extends Element {
 	
 	private String type;
 	private int value;
+	private int color;
 	
 	/**
 	 * Konstruktor
 	 * @param type Art des Gegenstandes
 	 * @param value Punkte-Wert des Gegenstandes
+	 * @param color Farbe des Gegenstandes
 	 */
-	public Item(PApplet window, int xPos, int yPos, int length, int width, String type, int value) {
+	public Item(PApplet window, int xPos, int yPos, int length, int width, String type, int value, int color) {
 		super(window, xPos, yPos, length, width);
 		this.type = type;
 		this.value = value;
+		this.color = color;
 	}
 
-	
 	/**
-	 * Entfernt einen eingesammelten Gegenstand vom Spielfeld.
+	 * Zeichnet den Gegenstand
 	 */
-	public void removeItem() {
+	public void drawItem() {
+		getWindow().fill(color);
+		getWindow().ellipse(yPos, xPos, length, length);
 		
 	}
 	
-
 }

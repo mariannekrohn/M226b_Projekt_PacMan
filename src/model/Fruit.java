@@ -20,8 +20,8 @@ public class Fruit extends Item implements Action{
 	 * @param fruit Art der Frucht
 	 */
 
-	public Fruit(PApplet window, int xPos, int yPos, int length, int width, String type, int value) {
-		super(window, xPos, yPos, length, width, type, value);
+	public Fruit(PApplet window, int xPos, int yPos, int length, int width, String type, int value, int color) {
+		super(window, xPos, yPos, length, width, type, value, color);
 		
 	}
 

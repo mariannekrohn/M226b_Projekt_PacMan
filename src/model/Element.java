@@ -36,4 +36,25 @@ public abstract class Element extends PApplet{
 	public PApplet getWindow() {
 		return window;
 	}
+
+
+	public int getXPos() {
+		return xPos;
+	}
+
+
+	public int getYPos() {
+		return yPos;
+	}
+
+
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
+	}
+
 }

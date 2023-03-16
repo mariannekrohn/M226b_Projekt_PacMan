@@ -27,9 +27,8 @@ public class MazeElement extends Element {
 	 * Füllt die einzelnen Felder auf dem Spielfeld aus.
 	 */
 	public void display() {
+		getWindow().stroke(1);
 		getWindow().fill(255, 0, 0);
-		getWindow().rect(yPos, xPos, length, width);
+		getWindow().rect(xPos, yPos, 25, 25);
 	}
-	
-
 }

@@ -15,11 +15,11 @@ public class PacMan extends Character {
 	private int lives;
 
 	
-	public PacMan(PApplet window, int xPos, int yPos, int length, int width, String name, int color) {
-		super(window, xPos, yPos, length, width, name, color);
+	public PacMan(PApplet window) {
+		super(window, 200, 300, 20, 20, "Pac Man", 0xFFFFFF00);
 		this.score = 0;
 		this.lives = 3;
-		
+	
 	}
 
 
