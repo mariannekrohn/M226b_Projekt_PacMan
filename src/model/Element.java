@@ -2,15 +2,28 @@ package model;
 
 import processing.core.PApplet;
 
+/**
+ * Verwaltet die Eigenschaften und Funktionalitäten die sich alle Character
+ * und Gegenständeteilen
+ * @author Marianne Krohn
+ *
+ */
 public abstract class Element extends PApplet{
 	
-	private int xPos;
-	private int yPos;
-	private int length;
-	private int height;
+	protected int xPos;
+	protected int yPos;
+	protected int length;
+	protected int height;
 	private PApplet window;
 	
-	
+	/**
+	 * Konstruktor
+	 * @param window
+	 * @param xPos x-Position des Elements
+	 * @param yPos y-Position des Elements
+	 * @param length Breite des Elements
+	 * @param height Höhe des Elements
+	 */
 	public Element(PApplet window, int xPos, int yPos, int length, int height) {
 		this.window = window;
 		this.xPos = xPos;
@@ -20,52 +33,7 @@ public abstract class Element extends PApplet{
 	}
 
 
-	public int getxPos() {
-		return xPos;
-	}
-
-
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
-
-
-	public int getyPos() {
-		return yPos;
-	}
-
-
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
-	}
-
-
-	public int getLength() {
-		return length;
-	}
-
-
-	public void setLength(int length) {
-		this.length = length;
-	}
-
-
-	public int getHeight() {
-		return height;
-	}
-
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-
 	public PApplet getWindow() {
 		return window;
-	}
-
-
-	public void setWindow(PApplet window) {
-		this.window = window;
 	}
 }

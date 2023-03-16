@@ -17,12 +17,12 @@ public abstract class Character extends Element implements Action {
 		super(window, xPos, yPos, length, height);
 		this.name = name;
 		this.color = color;
-		
 	}
+
 	
 	public void drawCharacter() {
 		getWindow().fill(color);
-		getWindow().circle(getyPos(), getyPos(), getLength());
+		getWindow().circle(xPos, yPos, length);
 	}
 
 	public String getName() {

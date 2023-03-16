@@ -6,13 +6,14 @@ import processing.core.PApplet;
  * Verwaltet die Eigenschaften und Funktionen der Pac-Man-Figur die vom Spieler
  * gesteuert wird.
  * 
- * @author Schule
+ * @author Marianne Krohn
  *
  */
 public class PacMan extends Character {
-
+	
 	private int score;
 	private int lives;
+
 
 	public PacMan(PApplet window, int xPos, int yPos, int length, int height, String name, int color) {
 		super(window, xPos, yPos, length, height, name, color);
@@ -22,8 +23,8 @@ public class PacMan extends Character {
 
 	@Override
 	public void moveUp() {
-		setyPos(getyPos() - 10);
-		System.out.println("x: " + getxPos() + ", y: " + getyPos());
+		yPos -= 10;
+		System.out.println("x: " + xPos + ", y: " + yPos);
 	}
 
 	/**
@@ -31,21 +32,22 @@ public class PacMan extends Character {
 	 */
 	@Override
 	public void moveDown() {
-		setyPos(getyPos() + 10);
-		System.out.println("x: " + getxPos() + ", y: " + getyPos());
-	}
+		yPos += 10;
+		System.out.println("x: " + xPos + ", y: " + yPos);
+		}
 
 	@Override
 	public void moveRight() {
-		setxPos(getxPos() + 10);
-		System.out.println("x: " + getxPos() + ", y: " + getyPos());
-	}
+		xPos += 10;
+		System.out.println("x: " + xPos + ", y: " + yPos);
+		}
 
 	@Override
 	public void moveLeft() {
-		setxPos(getxPos() - 10);
-		System.out.println("x: " + getxPos() + ", y: " + getyPos());
+		xPos -= 10;
+		System.out.println("x: " + xPos + ", y: " + yPos);
 	}
+	
 
 	/**
 	 * Addiert die Werte der eingesammelten Gegenstände zum Punktestand des Spielers

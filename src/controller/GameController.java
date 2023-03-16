@@ -17,11 +17,12 @@ public class GameController extends PApplet {
 	private int col;
 	private int row;
 
-//	PacMan player;
-	PacMan2 player;
+	PacMan player;
+//	PacMan2 player;
 	PApplet window;
 
-	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	private int[][] maze = { 
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0 },
 			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
 			{ 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -40,7 +41,8 @@ public class GameController extends PApplet {
 			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 },
 			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
 			{ 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+			};
 
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
@@ -53,7 +55,8 @@ public class GameController extends PApplet {
 //	}
 	
 	public void setup() {
-		player = new PacMan2(this);
+//		player = new PacMan2(this);
+		player = new PacMan(this, 200, 300, 25, 25, "Pac Man", 0xFFFFFF00);
 
 	}
 
@@ -106,6 +109,7 @@ public class GameController extends PApplet {
 //		
 //	}
 
+	
 	/**
 	 * Stellt sicher, dass Figuren sich nur innerhalb des Labyrinths bewegen können
 	 * und Gegenstände nur innerhalb des Labyrinths platziert werden können.
