@@ -1,4 +1,5 @@
 package controller;
+
 import java.util.ArrayList;
 
 import model.Element;
@@ -17,36 +18,43 @@ import view.MazeElement;
 public class GameController extends PApplet {
 
 	private MazeElement[][] grid;
-	private int col;
-	private int row;
+	private int x;
+	private int y;
+	private int gridSize;
 
 	PacMan player;
 	PApplet window;
-	
+
 	ArrayList<Point> points;
 
-	private int[][] maze = { 
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-			{ 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0 },
-			{ 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0 },
-			{ 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-			{ 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-			};
+	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+			{ 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 },
+			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
@@ -56,16 +64,16 @@ public class GameController extends PApplet {
 	public void setup() {
 		player = new PacMan(this);
 		points = new ArrayList<>();
-		
 
 	}
 
 	public void settings() {
-		row = maze[0].length;
-		col = maze.length;
-		grid = new MazeElement[col][row];
+		y = maze.length;
+		x = maze[0].length;
+		gridSize = 24;
+		grid = new MazeElement[y][x];
 
-		size(700, 500);
+		size(y * gridSize, x * gridSize);
 		initializeGrid();
 
 	}
@@ -74,70 +82,71 @@ public class GameController extends PApplet {
 		background(0);
 		initializeGame();
 	}
-	
-	/**
-	 * Teilt das Spielfeld in ein Raser von 28x25 Feldern auf.
-	 */
-	public void initializeGrid() {
-		for (int i = 0; i < col; i++) {
-			for (int j = 0; j < row; j++) {
-				grid[i][j] = new MazeElement(this, i * 25, j * 25);
-			}
-		}
-	}
 
-	/**
-	 * Gibt den Labryinth-Elementen Farbe und Form.
-	 */
-	private void displayMaze() {
-		for (int i = 0; i < col; i++) {
-			for (int j = 0; j < row; j++) {
-				if (maze[i][j] == 1) {
-					grid[i][j].display();
-				}
-			}
-		}
-	}
-	
 	/**
 	 * Zeichnet Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
 	public void initializeGame() {
 		displayMaze();
 		player.drawCharacter();
-		
-		for (int i = 0; i < col; i++) {
-			for (int j = 0; j < row; j++) {
+
+		for (int i = 0; i < y; i++) {
+			for (int j = 0; j < x; j++) {
 				if (maze[i][j] == 0) {
-					Point p = new Point(this, i * 25, j*25);
+					Point p = new Point(this, 12 + i * gridSize, 12 + j * gridSize);
 					points.add(p);
 				}
-
 			}
 		}
-		
+
 		for (Point p : points) {
 			p.drawItem();
 		}
 	}
-	
-	
+
+	/**
+	 * Teilt das Spielfeld in ein Raster von 20x28 Feldern auf.
+	 */
+	public void initializeGrid() {
+		for (int i = 0; i < y; i++) {
+			// alle 28 Spalten in der x-Richtung
+			for (int j = 0; j < x; j++) {
+				grid[i][j] = new MazeElement(this, i * gridSize, j * gridSize);
+			}
+		}
+
+	}
+
+	/**
+	 * Gibt den Labryinth-Elementen Farbe und Form.
+	 */
+	private void displayMaze() {
+		for (int i = 0; i < y; i++) {
+			for (int j = 0; j < x; j++) {
+				if (maze[i][j] == 1) {
+					grid[i][j].display();
+				}
+			}
+		}
+	}
+
 	/**
 	 * Berechnet den Abstand zwischen einzelnen Elementen
+	 * 
 	 * @return distance Distanz als double
 	 */
 	private double calculateDistance(PacMan player, Item i) {
 		double distance = 0;
 		float a = abs(player.getXPos() - i.getXPos());
 		float b = abs(player.getYPos() - i.getYPos());
-		
-		distance = Math.sqrt(a*a + b*b);
+
+		distance = Math.sqrt(a * a + b * b);
 		return distance;
 	}
-		
+
 	/**
-	 * Entfernt Gegenstände die Pac Man einsammelt und addiert ihren
-	 * Wert zum Punktestand des Spielers
+	 * Entfernt Gegenstände die Pac Man einsammelt und addiert ihren Wert zum
+	 * Punktestand des Spielers
 	 */
 //	public void collectItems() {
 //		for(Point p : points) {
@@ -150,7 +159,7 @@ public class GameController extends PApplet {
 //		}
 //		
 //	}
-	
+
 	/**
 	 * Stellt sicher, dass Figuren sich nur innerhalb des Labyrinths bewegen können
 	 * und Gegenstände nur innerhalb des Labyrinths platziert werden können.
@@ -158,14 +167,11 @@ public class GameController extends PApplet {
 	public void avoidMazeCollition() {
 	}
 
-
-
-
 	/**
-	 * Steuert die Bewegung der Pac-Man-Figur mit den Pfeiltasten
+	 * Ermöglicht die Steuerung der Pac-Man-Figur mit den Pfeiltasten
 	 */
 	public void keyPressed() {
-		if(key == CODED)
+		if (key == CODED)
 			switch (keyCode) {
 			case UP:
 				player.moveUp();

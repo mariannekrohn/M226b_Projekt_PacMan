@@ -31,7 +31,7 @@ public abstract class Item extends Element {
 	 */
 	public void drawItem() {
 		getWindow().fill(color);
-		getWindow().ellipse(yPos, xPos, length, length);
+		getWindow().ellipse(xPos, yPos, length, length);
 		
 	}
 	

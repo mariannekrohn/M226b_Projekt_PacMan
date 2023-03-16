@@ -9,6 +9,8 @@ import processing.core.PApplet;
  *
  */
 public class MazeElement extends Element {
+	
+	int gridSize = 24;
 
 	/**
 	 * Konstruktor
@@ -17,7 +19,7 @@ public class MazeElement extends Element {
 	 * @param yPos y-Position des Feldes
 	 */
 	public MazeElement(PApplet window, int xPos, int yPos) {
-		super(window, xPos, yPos, 25, 25);
+		super(window, xPos, yPos, 24, 24);
 		
 	}
 
@@ -29,6 +31,6 @@ public class MazeElement extends Element {
 	public void display() {
 		getWindow().stroke(1);
 		getWindow().fill(255, 0, 0);
-		getWindow().rect(xPos, yPos, 25, 25);
+		getWindow().rect(xPos, yPos, gridSize, gridSize);
 	}
 }

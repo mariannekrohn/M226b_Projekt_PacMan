@@ -16,7 +16,7 @@ public class PacMan extends Character {
 
 	
 	public PacMan(PApplet window) {
-		super(window, 200, 300, 20, 20, "Pac Man", 0xFFFFFF00);
+		super(window, 400, 300, 20, 20, "Pac Man", 0xFFFFFF00);
 		this.score = 0;
 		this.lives = 3;
 	
