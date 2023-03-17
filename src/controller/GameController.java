@@ -61,7 +61,7 @@ public class GameController extends PApplet {
 
 	// Processing-Methoden
 	public void setup() {
-		
+
 	}
 
 	public void settings() {
@@ -73,6 +73,7 @@ public class GameController extends PApplet {
 		size(y * gridSize, x * gridSize);
 		initializeGrid();
 		initializeGame();
+		avoidMazeCollition();
 
 	}
 
@@ -91,7 +92,7 @@ public class GameController extends PApplet {
 
 		initializePointItems();
 	}
-	
+
 	/**
 	 * Zeichnet Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
@@ -175,13 +176,19 @@ public class GameController extends PApplet {
 	 * Stellt sicher, dass Figuren sich nur innerhalb des Labyrinths bewegen können
 	 */
 	public void avoidMazeCollition() {
-		
+		for (int i = 0; i < y; i++) {
+			for (int j = 0; j < x; j++) {
+				int x = grid[i][j].getXPos();
+				int y = grid[i][j].getYPos();
+			}
+		}
 	}
 
 	/**
 	 * Ermöglicht die Steuerung der Pac-Man-Figur mit den Pfeiltasten
 	 */
 	public void keyPressed() {
+
 		if (key == CODED)
 			switch (keyCode) {
 			case UP:
@@ -196,8 +203,9 @@ public class GameController extends PApplet {
 			case LEFT:
 				player.moveLeft();
 				break;
-			
+
+			}
 		}
-	}
+
 
 }

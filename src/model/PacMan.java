@@ -19,13 +19,14 @@ public class PacMan extends Character {
 		super(window, 400, 300, 20, 20, "Pac Man", 0xFFFFFF00);
 		this.score = 0;
 		this.lives = 3;
-	
 	}
 
 
 	@Override
 	public void moveUp() {
-		yPos -= 10;
+		 if(yPos > 0 + 12){
+			yPos -= 10;
+		}
 	}
 
 	/**
@@ -33,17 +34,22 @@ public class PacMan extends Character {
 	 */
 	@Override
 	public void moveDown() {
-		yPos += 10;
+		if(yPos < 480 - 12) {
+			yPos += 10;
+		}
 		}
 
 	@Override
 	public void moveRight() {
+		if(xPos < 672 -12)
 		xPos += 10;
 		}
 
 	@Override
 	public void moveLeft() {
-		xPos -= 10;
+		if(xPos >0 + 12) {
+			xPos -= 10;
+		}
 	}
 	
 
