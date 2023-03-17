@@ -9,9 +9,4 @@ public class Point extends Item {
 		
 	}
 
-
-
-
-	
-
 }

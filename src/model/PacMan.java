@@ -47,13 +47,6 @@ public class PacMan extends Character {
 	}
 	
 
-	/**
-	 * Addiert die Werte der eingesammelten Gegenstände zum Punktestand des Spielers
-	 */
-	public void collectItems() {
-
-	}
-
 
 	public int getScore() {
 		return score;
