@@ -21,8 +21,11 @@ public abstract class Character extends Element implements Action {
 	}
 
 	
-	public void drawCharacter() {
+	public void chooseCharacterColor() {
 		getWindow().fill(color);
+	}
+	
+	public void drawCharacterShape() {
 		getWindow().ellipse(xPos, yPos, length, length);
 	}
 

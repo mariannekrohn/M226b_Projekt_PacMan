@@ -10,7 +10,6 @@ import view.MazeElement;
 
 /**
  * Verwaltet die Spielkontrolle
- * 
  * @author Marianne Krohn
  *
  */
@@ -20,6 +19,8 @@ public class GameController extends PApplet {
 	private int x;
 	private int y;
 	private int gridSize;
+
+	float comparisonColor;
 
 	PacMan player;
 	PApplet window;
@@ -73,7 +74,6 @@ public class GameController extends PApplet {
 		size(y * gridSize, x * gridSize);
 		initializeGrid();
 		initializeGame();
-		avoidMazeCollition();
 
 	}
 
@@ -97,18 +97,23 @@ public class GameController extends PApplet {
 	 * Zeichnet Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
 	public void drawGame() {
-		player.drawCharacter();
+
 		collectItems();
 
 		for (Point p : points) {
 			p.drawItem();
 		}
+
+		player.chooseCharacterColor();
+		comparisonColor = red(get(player.getXPos(), player.getYPos()));
+		player.drawCharacterShape();
 	}
 
 	/**
 	 * Teilt das Spielfeld in ein Raster von 20x28 Feldern auf.
 	 */
 	private void initializeGrid() {
+		
 		for (int i = 0; i < y; i++) {
 			// alle 28 Spalten in der x-Richtung
 			for (int j = 0; j < x; j++) {
@@ -118,9 +123,10 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Gibt den Labryinth-Elementen Farbe und Form.
+	 * Gibt den Labryinth -Elementen Farbe und Form.
 	 */
 	private void displayMaze() {
+		
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
 				if (maze[i][j] == 1) {
@@ -130,7 +136,12 @@ public class GameController extends PApplet {
 		}
 	}
 
+	/**
+	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert das
+	 * Punkte-Array
+	 */
 	private void initializePointItems() {
+		
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
 				if (maze[i][j] == 0) {
@@ -160,7 +171,7 @@ public class GameController extends PApplet {
 
 	/**
 	 * Berechnet den Abstand zwischen dem Player und den sammelbaren Objekten
-	 *
+	 * 
 	 * @return distance Distanz als double
 	 */
 	private double calculateDistance(PacMan player, Item i) {
@@ -173,25 +184,20 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Stellt sicher, dass Figuren sich nur innerhalb des Labyrinths bewegen können
-	 */
-	public void avoidMazeCollition() {
-		for (int i = 0; i < y; i++) {
-			for (int j = 0; j < x; j++) {
-				int x = grid[i][j].getXPos();
-				int y = grid[i][j].getYPos();
-			}
-		}
-	}
-
-	/**
-	 * Ermöglicht die Steuerung der Pac-Man-Figur mit den Pfeiltasten
+	 * Ermöglicht die Steuerung der Pac-Man-Figur mit den Pfeiltasten und stellt
+	 * sicher dass die Figur sich nur innerhalb des Labyrinths bewegen kann
 	 */
 	public void keyPressed() {
+
+		// if(xPos - 1 == 255) only allow up, down, right
+		// if(P + (PlayerSize + 1) == 255) only up, down, right
+		// if(yPos - 1 == 255) only allow down, left, right
+		// if(yPos + (Playersize +1) == 255 only allow up, left, right
 
 		if (key == CODED)
 			switch (keyCode) {
 			case UP:
+
 				player.moveUp();
 				break;
 			case DOWN:
@@ -205,7 +211,6 @@ public class GameController extends PApplet {
 				break;
 
 			}
-		}
-
+	}
 
 }
