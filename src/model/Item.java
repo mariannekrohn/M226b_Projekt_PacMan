@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public abstract class Item extends Element {
+public abstract class Item extends Element implements Draw {
 	
 	private String type;
 	private int value;
@@ -29,11 +29,9 @@ public abstract class Item extends Element {
 	/**
 	 * Zeichnet den Gegenstand
 	 */
-	public void drawItem() {
+	public void draw() {
 		getWindow().fill(color);
 		getWindow().ellipse(xPos, yPos, length, length);
 		
 	}
-
-	
 }

@@ -15,48 +15,55 @@ public class TestPacMan {
 	
 	PacMan p;
 	
+	int xPos;
+	int yPos;
+	int step;
+
 	@Before
 	public void setup() {
 		PApplet applet = Mockito.mock(PApplet.class);
 		//when(applet.height)..applet.
 		
 		p = new PacMan(applet);
+		xPos = 324;
+		yPos = 444;
+		step = 6;
 	}
 
 	@Test
 	public void testMoveUp() {
-		assertEquals(300, p.getYPos());
+		assertEquals(yPos, p.getYPos());
 		
 		p.moveUp();
 		
-		assertEquals(290, p.getYPos());
+		assertEquals(yPos - step, p.getYPos());
 	}
 	
 	@Test
 	public void testMoveDown() {
-		assertEquals(300, p.getYPos());
+		assertEquals(yPos, p.getYPos());
 		
 		p.moveDown();
 		
-		assertEquals(310, p.getYPos());
+		assertEquals(yPos + step, p.getYPos());
 	}
 	
 	@Test
 	public void testMoveRight() {
-		assertEquals(200, p.getXPos());
+		assertEquals(xPos, p.getXPos());
 		
 		p.moveRight();
 		
-		assertEquals(210, p.getXPos());
+		assertEquals(xPos + step, p.getXPos());
 	}
 	
 	@Test
 	public void testMoveLeft() {
-		assertEquals(200, p.getXPos());
+		assertEquals(xPos, p.getXPos());
 		
-		p.moveRight();
+		p.moveLeft();
 		
-		assertEquals(210, p.getXPos());
+		assertEquals(xPos - step, p.getXPos());
 	}
 
 }

@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 /**
  * Verwaltet die Eigenschaften und Funktionalitäten die sich alle Character
- * und Gegenständeteilen
+ * und Gegenstände teilen
  * @author Marianne Krohn
  *
  */
@@ -32,27 +32,42 @@ public abstract class Element extends PApplet{
 		this.width = width;
 	}
 
-
+	/**
+	 * Getter für PApplet
+	 * @return window asl PApplet
+	 */
 	public PApplet getWindow() {
 		return window;
 	}
 
-
+	/**
+	 * Getter für die x-Position des Elements
+	 * @return xPos als int
+	 */
 	public int getXPos() {
 		return xPos;
 	}
 
-
+	/**
+	 * Getter für die y-Position des Elements
+	 * @return yPos als int
+	 */
 	public int getYPos() {
 		return yPos;
 	}
 
-
+	/**
+	 * Setter für die x-Position des Elements
+	 * @param xPos als int
+	 */
 	public void setXPos(int xPos) {
 		this.xPos = xPos;
 	}
 
-
+	/**
+	 * Setter für die y-Positiond es Elements
+	 * @param yPos als int
+	 */
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
 	}

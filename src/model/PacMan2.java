@@ -9,24 +9,32 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public class PacMan extends Character implements Move {
-
+public class PacMan2 implements Move {
+	private int xPos;
+	private int yPos;
+	private int length;
+	private PApplet window;
+	
+	private int color;
 	private int score;
-	private int lives;
-	private int step;
 
-	/**
-	 * Konstruktor
-	 * Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte und definiert
-	 * die Bewegungsgrösse des Charakters
-	 * @param window
-	 */
-	public PacMan(PApplet window) {
-		super(window, 12, 468, 16, 16, "Pac Man", 0xFFFFFF00);
-		this.score = -5; // max. 1655
-		this.lives = 3;
-		this.step = 6;
+
+
+	public PacMan2(PApplet window, int xPos, int yPos) {
+		this.window = window;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.length = 16;
+		this.color =  0xFFFFFF00;
+		this.score = 0;
 	}
+	
+	public void drawCharacter() {
+		window.fill(color);
+
+		window.ellipse(xPos, yPos, length, length);
+
+}
 
 	/**
 	 * Ermöglicht die Aufwärtsbewegung der PacMan-Figur innerhalb der Spielfeldgrösse.
@@ -34,7 +42,7 @@ public class PacMan extends Character implements Move {
 	@Override
 	public void moveUp() {
 		if (yPos > 0 + 12) {
-			yPos -= step;
+			yPos -= 6;
 		}
 	}
 
@@ -44,7 +52,8 @@ public class PacMan extends Character implements Move {
 	@Override
 	public void moveDown() {
 		if (yPos < 480 - 12) {
-			yPos += step;
+			yPos += 6;
+			xPos += 0;
 		}
 	}
 
@@ -53,9 +62,8 @@ public class PacMan extends Character implements Move {
 	 */
 	@Override
 	public void moveRight() {
-		if (xPos < 672 - 12) {
-			xPos += step;
-		}
+		if (xPos < 672 - 12)
+			xPos += 6;
 	}
 
 	/**
@@ -64,40 +72,33 @@ public class PacMan extends Character implements Move {
 	@Override
 	public void moveLeft() {
 		if (xPos > 0 + 12) {
-			xPos -= step;
+			xPos -= 6;
 		}
 	}
+	
+	public int getXPos() {
+		return xPos;
+	}
 
-	/**
-	 * Getter für den Punktestand des Spielers
-	 * @return Punktestand als int
-	 */
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getYPos() {
+		return yPos;
+	}
+
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
+	}
+	
 	public int getScore() {
 		return score;
 	}
-
-	/**
-	 * Setter für den Punktestand des Spielers
-	 * @param score als int
-	 */
+	
 	public void setScore(int score) {
 		this.score = score;
 	}
 
-	/**
-	 * Getter für die Leben des Spielers
-	 * @return Leben als int
-	 */
-	public int getLives() {
-		return lives;
-	}
-
-	/**
-	 * Setter für die Leben des Spielers
-	 * @param lives als int
-	 */
-	public void setLives(int lives) {
-		this.lives = lives;
-	}
 
 }

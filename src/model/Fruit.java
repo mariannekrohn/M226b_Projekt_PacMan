@@ -9,7 +9,7 @@ import processing.core.PApplet;
  * @author Marianne Krohn
  *
  */
-public class Fruit extends Item implements Action{
+public class Fruit extends Item implements Move{
 
 	private ArrayList fruit;
 	

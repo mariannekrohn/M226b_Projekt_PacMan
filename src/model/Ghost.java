@@ -4,15 +4,24 @@ import processing.core.PApplet;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der Geister
- * @author Schule
+ * @author Marianne Krohn
  *
  */
-public class Ghost extends Character {
-
+public class Ghost extends Character implements Move {
 	
-	public Ghost(PApplet window, int xPos, int yPos, int length, int height, String name, int color) {
-		super(window, xPos, yPos, length, height, name, color);
-		// TODO Auto-generated constructor stub
+	private int step;
+
+	/**
+	 * Konstruktor
+	 * @param window PApplet
+	 * @param xPos x-Position des Geistes
+	 * @param yPos y-Position des Geistes
+	 * @param name Name des Geistes
+	 * @param color Farbe des Geistes
+	 */
+	public Ghost(PApplet window, int xPos, int yPos, String name, int color) {
+		super(window, xPos, yPos, 16, 16, name, color);
+		this.step = 1;
 	}
 
 	/**
@@ -21,25 +30,32 @@ public class Ghost extends Character {
 	 */
 	@Override
 	public void moveUp() {
-		// TODO Auto-generated method stub
-		
+		if (yPos > 0 + 12) {
+			yPos -= step;
+		}
 	}
 
 	@Override
 	public void moveDown() {
-		// TODO Auto-generated method stub
+		if (yPos < 480 - 12) {
+			yPos += step;
+		}
 		
 	}
 
 	@Override
 	public void moveRight() {
-		// TODO Auto-generated method stub
+		if (xPos < 672 - 12) {
+			xPos += step;
+		}
 		
 	}
 
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
+		if (xPos < 672 - 12) {
+			xPos += step;
+		}
 		
 	}
 

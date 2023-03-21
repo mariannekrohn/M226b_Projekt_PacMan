@@ -4,13 +4,13 @@ import model.Element;
 import processing.core.PApplet;
 
 /**
- * Verwaltet die Eigenschaften und Fähigkeiten der einzelnen Felder bzw. Labyrinth-Elementen
- * @author Schule
- *
+ * Verwaltet die Eigenschaften und Fähigkeiten der einzelnen Felder bzw. Labyrinth-Elemente
+ * 
+ * @author Marianne Krohn
  */
 public class MazeElement extends Element {
 	
-	int gridSize = 24;
+	private int gridSize;
 
 	/**
 	 * Konstruktor
@@ -20,17 +20,15 @@ public class MazeElement extends Element {
 	 */
 	public MazeElement(PApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 24, 24);
-		
+		this.gridSize = 24;
 	}
 
-
-	
 	/**
-	 * Füllt die einzelnen Felder auf dem Spielfeld aus.
+	 * Füllt die einzelnen Felder auf dem Spielfeld aus
 	 */
 	public void display() {
-		getWindow().stroke(1);
-		getWindow().fill(255, 0, 0);
+		getWindow().noStroke();
+		getWindow().fill(0, 51, 102);
 		getWindow().rect(xPos, yPos, gridSize, gridSize);
 	}
 }

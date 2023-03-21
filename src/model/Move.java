@@ -1,6 +1,6 @@
 package model;
 
-public interface Action {
+public interface Move {
 	
 	public void moveUp();
 	
