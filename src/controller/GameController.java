@@ -45,7 +45,7 @@ public class GameController extends PApplet {
 			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
 			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
 			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 }, // sdf
+			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
 			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
 			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
 			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
@@ -78,7 +78,7 @@ public class GameController extends PApplet {
 		grid = new MazeElement[y][x];
 		size(y * gridSize, (x + 2) * gridSize);
 
-		step = 6;
+		step = 24;
 		distance = gridSize / 2 + 1;
 
 		initializeGrid();
@@ -117,7 +117,7 @@ public class GameController extends PApplet {
 		player.draw();
 		ghost.draw();
 
-		moveGhosts();
+//		moveGhosts();
 
 		textSize(20);
 		fill(150);
@@ -183,6 +183,7 @@ public class GameController extends PApplet {
 
 	/**
 	 * Berechnet den Abstand zwischen zwei Objekten
+	 * 
 	 * @return distance Distanz als double
 	 */
 	private double calculateDistance(Element e1, Element e2) {
@@ -193,122 +194,88 @@ public class GameController extends PApplet {
 		distance = Math.sqrt(a * a + b * b);
 		return distance;
 	}
-
-	/**
-	 * Bewegt die Geister in zufälligen Mustern
-	 */
-	private void moveGhosts() {
-		if (player.getXPos() > ghost.getXPos() && allowMovementRight(ghost) == true) {
-			ghost.setXPos(ghost.getXPos() + 3);
-		}
-		if (allowMovementDown(ghost) == true) {
-			ghost.moveDown();
-		}
-//		if (player.getYPos() < ghost.getYPos() && allowMovementUp(ghost) == true) {
-//			ghost.moveUp();
-//		}
-//
-//		if (allowMovementLeft(ghost) == true) {
-//			ghost.moveLeft();
-//		}
-
+	
+	private int convertPosToIndex(int pos) {
+		return (pos - 12) / gridSize;
 	}
 
+
 	/**
-	 * Erlaubt Bewegung nach oben, wenn die Hintergrundfarbe nicht der
-	 * Labyrinthfarbe entspricht und sich die Figur in der Mitte eines Feldes
-	 * befindet.
+	 * Erlaubt Bewegung nach oben, wenn das oben angrenzende Feld nicht ausgefüllt
+	 * ist.
 	 * 
 	 * @return boolean
 	 */
 	private boolean allowMovementUp(Character c) {
-		if (blue(get(c.getXPos(), c.getYPos() - distance)) != 102
-				&& (c.getXPos()- gridSize/12) % 24 == 0
-		) {
-			return true;
-		}
-		return false;
+		return maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0;
 	}
 
 	/**
-	 * Erlaubt Bewegung nach unten, wenn die Hintergrundfarbe nicht der
-	 * Labyrinthfarbe entspricht und sich die Figur in der Mitte eines Feldes
-	 * befindet.
+	 * Erlaubt Bewegung nach unten, wenn das unten angrenzende Feld nicht ausgefüllt
+	 * ist.
 	 * 
 	 * @return boolean
 	 */
 	private boolean allowMovementDown(Character c) {
-		if (blue(get(c.getXPos(), c.getYPos() + distance)) != 102 
-				&& (c.getXPos() - gridSize/12) % 24 == 0) {
-			return true;
-		}
-		return false;
+		return maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() + gridSize)] == 0;
 	}
 
 	/**
-	 * Erlaubt Bewegung nach links, wenn die Hintergrundfarbe nicht der
-	 * Labyrinthfarbe entspricht und sich die Figur in der Mitte eines Feldes
-	 * befindet.
+	 * Erlaubt Bewegung nach links, wenn das unten angrenzende Feld nicht ausgefüllt
+	 * ist.
 	 * 
 	 * @return boolean
 	 */
 	private boolean allowMovementLeft(Character c) {
-		if (blue(get(c.getXPos() - distance, c.getYPos())) != 102 
-				&& (c.getYPos() - gridSize/12) % 24 == 0) {
-			return true;
-		}
-		return false;
+		return maze[convertPosToIndex(c.getXPos() - gridSize)][convertPosToIndex(c.getYPos())] == 0;
+
 	}
 
 	/**
-	 * Erlaubt Bewegung nach rechts, wenn die Hintergrundfarbe nicht der
-	 * Labyrinthfarbe entspricht und sich die Figur in der Mitte eines Feldes
-	 * befindet.
+	 * Erlaubt Bewegung nach rechts, wenn das unten angrenzende Feld nicht ausgefüllt
+	 * ist.
 	 * 
 	 * @return boolean
 	 */
 	private boolean allowMovementRight(Character c) {
-		if (blue(get(c.getXPos() + distance, c.getYPos())) != 102 
-				&& (c.getYPos() - gridSize/12) % 24 == 0) {
-			return true;
-		}
-		return false;
+		return maze[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
+
 	}
 
 	/**
 	 * Ermöglicht die Steuerung der Pac-Man-Figur mit den Pfeiltasten und stellt
-	 * sicher dass die Figur sich nur innerhalb des Labyrinths bewegen kann
+	 * sicher dass die Figur sich nur innerhalb des Labyrinths und innerhalb des
+	 * Spielfelds bewegen kann.
 	 */
 	public void keyPressed() {
-
-		if (key == CODED)
 			switch (keyCode) {
 			case UP:
-				if (allowMovementUp(player) == true) {
+				if (player.getYPos() > 12 && allowMovementUp(player) == true) {
 					player.moveUp();
 					break;
 				} else {
 					player.setYPos(player.getYPos() - step);
 				}
 			case DOWN:
-				if (allowMovementDown(player) == true) {
+				if (player.getYPos() < player.getWindowHeight() - 60 && allowMovementDown(player) == true) {
 					player.moveDown();
 					break;
-				} else {
-					System.out.println("STOP!");
-//					System.out.println("x: " + player.getXPos()+ ", y: " + player.getYPos());
+//				} else {
+////					player.setYPos(player.getYPos() + step);
+//					System.out.println(player.getXPos() + ", " + player.getYPos());
 				}
 			case RIGHT:
-				if (allowMovementRight(player) == true) {
-					player.moveRight();
-					break;
+				 if (player.getXPos() < player.getWindowWidth() -12 && allowMovementRight(player) == true) {
+				player.moveRight();
+				break;
+
 				} else {
 					player.setXPos(player.getXPos() + step);
 				}
 			case LEFT:
-				if (allowMovementLeft(player) == true) {
-					player.moveLeft();
-					break;
+				 if (player.getXPos() > 0 + 12 && allowMovementLeft(player) == true) {
+				player.moveLeft();
+				break;
 				}
 
 			}
