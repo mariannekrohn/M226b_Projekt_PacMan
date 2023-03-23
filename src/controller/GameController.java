@@ -194,11 +194,10 @@ public class GameController extends PApplet {
 		distance = Math.sqrt(a * a + b * b);
 		return distance;
 	}
-	
+
 	private int convertPosToIndex(int pos) {
 		return (pos - 12) / gridSize;
 	}
-
 
 	/**
 	 * Erlaubt Bewegung nach oben, wenn das oben angrenzende Feld nicht ausgefüllt
@@ -232,8 +231,8 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Erlaubt Bewegung nach rechts, wenn das unten angrenzende Feld nicht ausgefüllt
-	 * ist.
+	 * Erlaubt Bewegung nach rechts, wenn das unten angrenzende Feld nicht
+	 * ausgefüllt ist.
 	 * 
 	 * @return boolean
 	 */
@@ -248,37 +247,39 @@ public class GameController extends PApplet {
 	 * Spielfelds bewegen kann.
 	 */
 	public void keyPressed() {
-			switch (keyCode) {
-			case UP:
-				if (player.getYPos() > 12 && allowMovementUp(player) == true) {
-					player.moveUp();
-					break;
-				} else {
-					player.setYPos(player.getYPos() - step);
-				}
-			case DOWN:
-				if (player.getYPos() < player.getWindowHeight() - 60 && allowMovementDown(player) == true) {
-					player.moveDown();
-					break;
-//				} else {
-////					player.setYPos(player.getYPos() + step);
-//					System.out.println(player.getXPos() + ", " + player.getYPos());
-				}
-			case RIGHT:
-				 if (player.getXPos() < player.getWindowWidth() -12 && allowMovementRight(player) == true) {
-				player.moveRight();
-				break;
+		switch (keyCode) {
+		case UP:
+			if (allowMovementUp(player) == true) {
+				player.moveUp();
+			} else {
+				player.setYPos(player.getYPos() - step);
+			}
+			break;
+		case DOWN:
+			if (allowMovementDown(player) == true) {
+				player.moveDown();
 
-				} else {
-					player.setXPos(player.getXPos() + step);
-				}
-			case LEFT:
-				 if (player.getXPos() > 0 + 12 && allowMovementLeft(player) == true) {
+			} else {
+				player.setYPos(player.getYPos() + step);
+			}
+			break;
+		case RIGHT:
+			if (allowMovementRight(player) == true) {
+				player.moveRight();
+
+			} else {
+				player.setXPos(player.getXPos() + step);
+			}
+			break;
+		case LEFT:
+			if (allowMovementLeft(player) == true) {
 				player.moveLeft();
-				break;
-				}
 
 			}
+			break;
+
+		}
+
 	}
 
 }

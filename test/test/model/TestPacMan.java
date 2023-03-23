@@ -23,12 +23,10 @@ public class TestPacMan {
 	public void setup() {
 		// Mocken der Klasse
 		PApplet doc = Mockito.mock(PApplet.class);
-		//zu Überprüfender Wert einer Methode
-//			when(applet.height).thenReturn(10);
 		
-		xPos = 200;
-		yPos = 400;
-		step = 6;
+		xPos = 100;
+		yPos = 100;
+		step = 24;
 		
 		sut = new PacMan(doc, xPos, yPos);
 		
@@ -51,6 +49,7 @@ public class TestPacMan {
 	
 	@Test
 	public void testMoveDown() {
+		
 		sut.moveDown();
 		
 		assertEquals(yPos + step, sut.getYPos());

@@ -16,9 +16,8 @@ public class PacMan extends Character implements Move {
 	private int step;
 
 	/**
-	 * Konstrukto
-	 * Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte
-	 * und definiert die Bewegungsgrösse des Charakters
+	 * Konstrukto Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte und
+	 * definiert die Bewegungsgrösse des Charakters
 	 * 
 	 * @param window
 	 */
@@ -34,32 +33,39 @@ public class PacMan extends Character implements Move {
 	 */
 	@Override
 	public void moveUp() {
-		yPos -= step;
+		if (yPos > 12) {
+			yPos -= step;
+		}
 	}
 
 	/**
-	 * Bewegt die  PacMan-Figur abwärts.
+	 * Bewegt die PacMan-Figur abwärts.
 	 */
 	@Override
 	public void moveDown() {
-
-		yPos += step;
+		if (yPos < 468) {
+			yPos += step;
+		}
 	}
 
 	/**
-	 * Bewegt die  PacMan-Figur nach links.
+	 * Bewegt die PacMan-Figur nach links.
 	 */
 	@Override
 	public void moveLeft() {
-		xPos -= step;
+		if (xPos > 12) {
+			xPos -= step;
+		}
 	}
 
 	/**
-	 * Bewegt die  PacMan-Figur nach rechts.
+	 * Bewegt die PacMan-Figur nach rechts.
 	 */
 	@Override
 	public void moveRight() {
-		xPos += step;
+		if (xPos < 660) {
+			xPos += step;
+		}
 	}
 
 	public int getScore() {
