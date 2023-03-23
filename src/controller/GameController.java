@@ -79,8 +79,7 @@ public class GameController extends PApplet {
 		size(y * gridSize, (x + 2) * gridSize);
 
 		step = 6;
-		characterSize = 16;
-		distance = characterSize / 2 + step;
+		distance = gridSize / 2 + 1;
 
 		initializeGrid();
 		initializeGame();
@@ -97,7 +96,7 @@ public class GameController extends PApplet {
 	 * Initialisiert alle Figuren und Gegenstände
 	 */
 	public void initializeGame() {
-		player = new PacMan(this);
+		player = new PacMan(this, 12, 468);
 		ghost = new Ghost(this, 12, 12, "Pinky", 0xFFE44B8D);
 		points = new ArrayList<>();
 		window = new PApplet();
@@ -224,7 +223,7 @@ public class GameController extends PApplet {
 	 */
 	private boolean allowMovementUp(Character c) {
 		if (blue(get(c.getXPos(), c.getYPos() - distance)) != 102
-//				&& (c.getXPos()-324) % 24 == 0
+				&& (c.getXPos()- gridSize/12) % 24 == 0
 		) {
 			return true;
 		}
@@ -239,7 +238,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementDown(Character c) {
-		if (blue(get(c.getXPos(), c.getYPos() + distance)) != 102 && (c.getXPos() - 324) % 24 == 0) {
+		if (blue(get(c.getXPos(), c.getYPos() + distance)) != 102 
+				&& (c.getXPos() - gridSize/12) % 24 == 0) {
 			return true;
 		}
 		return false;
@@ -253,7 +253,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementLeft(Character c) {
-		if (blue(get(c.getXPos() - distance, c.getYPos())) != 102 && (c.getYPos() - 444) % 24 == 0) {
+		if (blue(get(c.getXPos() - distance, c.getYPos())) != 102 
+				&& (c.getYPos() - gridSize/12) % 24 == 0) {
 			return true;
 		}
 		return false;
@@ -267,7 +268,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementRight(Character c) {
-		if (blue(get(c.getXPos() + distance, c.getYPos())) != 102 && (c.getYPos() - 444) % 24 == 0) {
+		if (blue(get(c.getXPos() + distance, c.getYPos())) != 102 
+				&& (c.getYPos() - gridSize/12) % 24 == 0) {
 			return true;
 		}
 		return false;

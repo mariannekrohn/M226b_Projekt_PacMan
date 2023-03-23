@@ -21,8 +21,8 @@ public class PacMan extends Character implements Move {
 	 * die Bewegungsgrösse des Charakters
 	 * @param window
 	 */
-	public PacMan(PApplet window) {
-		super(window, 12, 468, 16, 16, "Pac Man", 0xFFFFFF00);
+	public PacMan(PApplet window, int xPos, int yPos) {
+		super(window, xPos, yPos, 16, 16, "Pac Man", 0xFFFFFF00);
 		this.score = -5; // max. 1655
 		this.lives = 3;
 		this.step = 6;
@@ -43,18 +43,8 @@ public class PacMan extends Character implements Move {
 	 */
 	@Override
 	public void moveDown() {
-		if (yPos < 480 - 12) {
+		if (yPos < getWindowHeight() - 12) {
 			yPos += step;
-		}
-	}
-
-	/**
-	 * Ermöglicht die Rechtsbewegung der PacMan-Figur innerhalb der Spielfeldgrösse.
-	 */
-	@Override
-	public void moveRight() {
-		if (xPos < 672 - 12) {
-			xPos += step;
 		}
 	}
 
@@ -67,6 +57,18 @@ public class PacMan extends Character implements Move {
 			xPos -= step;
 		}
 	}
+	
+	/**
+	 * Ermöglicht die Rechtsbewegung der PacMan-Figur innerhalb der Spielfeldgrösse.
+	 */
+	@Override
+	public void moveRight() {
+		if (xPos < getWindowWidth() - 12) {
+			xPos += step;
+		}
+	}
+
+
 
 	/**
 	 * Getter für den Punktestand des Spielers

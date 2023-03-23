@@ -34,10 +34,18 @@ public abstract class Element extends PApplet{
 
 	/**
 	 * Getter für PApplet
-	 * @return window asl PApplet
+	 * @return window als PApplet
 	 */
 	public PApplet getWindow() {
 		return window;
+	}
+	
+	public int getWindowHeight() {
+		return window.height;
+	}
+	
+	public int getWindowWidth() {
+		return window.width;
 	}
 
 	/**

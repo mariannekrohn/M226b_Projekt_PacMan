@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 
 public class TestPacMan {
 	
-	PacMan p;
+	PacMan sut;
 	
 	int xPos;
 	int yPos;
@@ -21,49 +21,53 @@ public class TestPacMan {
 
 	@Before
 	public void setup() {
-		PApplet applet = Mockito.mock(PApplet.class);
-		//when(applet.height)..applet.
+		// Mocken der Klasse
+		PApplet doc = Mockito.mock(PApplet.class);
+		//zu Überprüfender Wert einer Methode
+//			when(applet.height).thenReturn(10);
 		
-		p = new PacMan(applet);
-		xPos = 324;
-		yPos = 444;
+		xPos = 200;
+		yPos = 400;
 		step = 6;
+		
+		sut = new PacMan(doc, xPos, yPos);
+		
+	}
+	
+	@Test
+	public void testConstructor() {
+		assertEquals(yPos, sut.getYPos());
+		assertEquals(yPos, sut.getYPos());
+		assertEquals(xPos, sut.getXPos());
+		assertEquals(xPos, sut.getXPos());
 	}
 
 	@Test
 	public void testMoveUp() {
-		assertEquals(yPos, p.getYPos());
+		sut.moveUp();
 		
-		p.moveUp();
-		
-		assertEquals(yPos - step, p.getYPos());
+		assertEquals(yPos - step, sut.getYPos());
 	}
 	
 	@Test
 	public void testMoveDown() {
-		assertEquals(yPos, p.getYPos());
+		sut.moveDown();
 		
-		p.moveDown();
-		
-		assertEquals(yPos + step, p.getYPos());
+		assertEquals(yPos + step, sut.getYPos());
 	}
 	
 	@Test
-	public void testMoveRight() {
-		assertEquals(xPos, p.getXPos());
+	public void testMoveRight() {		
+		sut.moveRight();
 		
-		p.moveRight();
-		
-		assertEquals(xPos + step, p.getXPos());
+		assertEquals(xPos + step, sut.getXPos());
 	}
 	
 	@Test
-	public void testMoveLeft() {
-		assertEquals(xPos, p.getXPos());
+	public void testMoveLeft() {		
+		sut.moveLeft();
 		
-		p.moveLeft();
-		
-		assertEquals(xPos - step, p.getXPos());
+		assertEquals(xPos - step, sut.getXPos());
 	}
 
 }
