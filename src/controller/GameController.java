@@ -13,7 +13,6 @@ import view.MazeElement;
 
 /**
  * Verwaltet die Spielkontrolle
- * 
  * @author Marianne Krohn
  */
 public class GameController extends PApplet {
@@ -115,7 +114,7 @@ public class GameController extends PApplet {
 			p.draw();
 		}
 		player.draw();
-		ghost.draw();
+//		ghost.draw();
 
 //		moveGhosts();
 
@@ -183,7 +182,6 @@ public class GameController extends PApplet {
 
 	/**
 	 * Berechnet den Abstand zwischen zwei Objekten
-	 * 
 	 * @return distance Distanz als double
 	 */
 	private double calculateDistance(Element e1, Element e2) {
@@ -206,7 +204,9 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementUp(Character c) {
-		return maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0;
+		return c.getYPos() - gridSize >= 12 
+				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0
+			;
 	}
 
 	/**
@@ -216,7 +216,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementDown(Character c) {
-		return maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() + gridSize)] == 0;
+		return c.getYPos() + gridSize <= 468
+				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() + gridSize)] == 0;
 	}
 
 	/**
@@ -226,7 +227,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementLeft(Character c) {
-		return maze[convertPosToIndex(c.getXPos() - gridSize)][convertPosToIndex(c.getYPos())] == 0;
+		return c.getXPos() - gridSize >= 12
+				&& maze[convertPosToIndex(c.getXPos() - gridSize)][convertPosToIndex(c.getYPos())] == 0;
 
 	}
 
@@ -237,7 +239,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementRight(Character c) {
-		return maze[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
+		return c.getXPos() + gridSize<= 660
+				&& maze[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
 
 	}
 
@@ -251,30 +254,21 @@ public class GameController extends PApplet {
 		case UP:
 			if (allowMovementUp(player) == true) {
 				player.moveUp();
-			} else {
-				player.setYPos(player.getYPos() - step);
 			}
 			break;
 		case DOWN:
 			if (allowMovementDown(player) == true) {
 				player.moveDown();
-
-			} else {
-				player.setYPos(player.getYPos() + step);
 			}
 			break;
 		case RIGHT:
 			if (allowMovementRight(player) == true) {
 				player.moveRight();
-
-			} else {
-				player.setXPos(player.getXPos() + step);
 			}
 			break;
 		case LEFT:
 			if (allowMovementLeft(player) == true) {
 				player.moveLeft();
-
 			}
 			break;
 
