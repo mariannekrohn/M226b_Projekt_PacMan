@@ -13,22 +13,27 @@ import view.MazeElement;
 
 /**
  * Verwaltet die Spielkontrolle
+ * 
  * @author Marianne Krohn
  */
 public class GameController extends PApplet {
 
+	PApplet window;
 	private MazeElement[][] grid;
 	private int x;
 	private int y;
 	private int gridSize;
-
+	
 	int step;
 	int characterSize;
-	int distance;
+	int counter;
 
 	PacMan player;
-	Ghost ghost;
-	PApplet window;
+	Ghost blinky;
+	Ghost pinky;
+	Ghost inky;
+	Ghost clyde;
+	
 
 	ArrayList<Point> points;
 
@@ -78,7 +83,7 @@ public class GameController extends PApplet {
 		size(y * gridSize, (x + 2) * gridSize);
 
 		step = 24;
-		distance = gridSize / 2 + 1;
+		counter = 0;
 
 		initializeGrid();
 		initializeGame();
@@ -96,7 +101,10 @@ public class GameController extends PApplet {
 	 */
 	public void initializeGame() {
 		player = new PacMan(this, 12, 468);
-		ghost = new Ghost(this, 12, 12, "Pinky", 0xFFE44B8D);
+		blinky = new Ghost(this, 84, 228, "Blinky", 0xFFFF0000);
+		pinky = new Ghost(this, 588, 228, "Pinky", 0xFFE44B8D);
+		inky = new Ghost(this, 422, 204, "Inky", 0xFF00FFFF);
+		clyde = new Ghost(this, 252, 204, "Clyde", 0xFFFFA500);
 		points = new ArrayList<>();
 		window = new PApplet();
 
@@ -114,9 +122,16 @@ public class GameController extends PApplet {
 			p.draw();
 		}
 		player.draw();
-//		ghost.draw();
-
-//		moveGhosts();
+		
+		blinky.draw();
+		pinky.draw();
+		inky.draw();
+		clyde.draw();
+		
+		moveGhosts(blinky);
+		moveGhosts(pinky);
+		moveGhosts(inky);
+		moveGhosts(clyde);
 
 		textSize(20);
 		fill(150);
@@ -182,6 +197,7 @@ public class GameController extends PApplet {
 
 	/**
 	 * Berechnet den Abstand zwischen zwei Objekten
+	 * 
 	 * @return distance Distanz als double
 	 */
 	private double calculateDistance(Element e1, Element e2) {
@@ -191,6 +207,29 @@ public class GameController extends PApplet {
 
 		distance = Math.sqrt(a * a + b * b);
 		return distance;
+	}
+
+	/**
+	 * Bewegt die Geister (zufällig) auf dem Spielfeld und lässt sie Pac-Man
+	 * verfolgen, wenn er ihnen zu nahe kommt
+	 */
+	private void moveGhosts(Ghost g) {
+		if (keyPressed == true) {
+			counter++;
+			if (counter % 7 == 0) {
+				//switch case with math random
+				if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
+					g.setYPos(g.getYPos() - step);
+				} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
+					g.setYPos(g.getYPos() + step);
+				} else if (allowMovementLeft(g) == true && player.getXPos() < g.getXPos()) {
+					g.setXPos(g.getXPos() - step);
+				} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
+					g.setXPos(g.getXPos() + step);
+				}
+			}
+		}
+
 	}
 
 	private int convertPosToIndex(int pos) {
@@ -204,9 +243,8 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementUp(Character c) {
-		return c.getYPos() - gridSize >= 12 
-				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0
-			;
+		return c.getYPos() - gridSize >= 12
+				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0;
 	}
 
 	/**
@@ -239,7 +277,7 @@ public class GameController extends PApplet {
 	 * @return boolean
 	 */
 	private boolean allowMovementRight(Character c) {
-		return c.getXPos() + gridSize<= 660
+		return c.getXPos() + gridSize <= 660
 				&& maze[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
 
 	}
