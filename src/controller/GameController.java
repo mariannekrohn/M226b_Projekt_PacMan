@@ -8,6 +8,7 @@ import model.Ghost;
 import model.Item;
 import model.PacMan;
 import model.Point;
+import model.PowerPill;
 import processing.core.PApplet;
 import view.MazeElement;
 
@@ -23,19 +24,17 @@ public class GameController extends PApplet {
 	private int x;
 	private int y;
 	private int gridSize;
-	
+
 	int step;
 	int characterSize;
 	int counter;
 
 	PacMan player;
-	Ghost blinky;
-	Ghost pinky;
-	Ghost inky;
-	Ghost clyde;
-	
+	ArrayList<Ghost> ghosts;
+
 
 	ArrayList<Point> points;
+	ArrayList<PowerPill> powerPills;
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -100,15 +99,18 @@ public class GameController extends PApplet {
 	 * Initialisiert alle Figuren und Gegenstände
 	 */
 	public void initializeGame() {
-		player = new PacMan(this, 12, 468);
-		blinky = new Ghost(this, 84, 228, "Blinky", 0xFFFF0000);
-		pinky = new Ghost(this, 588, 228, "Pinky", 0xFFE44B8D);
-		inky = new Ghost(this, 422, 204, "Inky", 0xFF00FFFF);
-		clyde = new Ghost(this, 252, 204, "Clyde", 0xFFFFA500);
-		points = new ArrayList<>();
 		window = new PApplet();
 
+		player = new PacMan(this, 12, 468);
+		ghosts = new ArrayList<>();
+
+
+		points = new ArrayList<>();
+		powerPills = new ArrayList<>();
+
+		initializeGhosts();
 		initializePointItems();
+		initializePowerPills();
 	}
 
 	/**
@@ -116,26 +118,31 @@ public class GameController extends PApplet {
 	 */
 	public void drawGame() {
 
-		collectItems();
+		collectItem();
+		removeLife();
 
 		for (Point p : points) {
 			p.draw();
 		}
+		
+		for (PowerPill p : powerPills ) {
+			p.draw();
+		}
+
 		player.draw();
 		
-		blinky.draw();
-		pinky.draw();
-		inky.draw();
-		clyde.draw();
+		for (Ghost g : ghosts) {
+			g.draw();
+			moveGhost(g);
+		}
 		
-		moveGhosts(blinky);
-		moveGhosts(pinky);
-		moveGhosts(inky);
-		moveGhosts(clyde);
-
 		textSize(20);
 		fill(150);
 		text("Score: " + player.getScore(), 20, 504);
+		
+		textSize(20);
+		fill(150);
+		text("Lives: " + player.getLives(), 150, 504);
 	}
 
 	/**
@@ -162,6 +169,16 @@ public class GameController extends PApplet {
 			}
 		}
 	}
+	
+	/**
+	 * Initialisiert die Geister
+	 */
+	private void initializeGhosts() {
+		ghosts.add(new Ghost(this, 84, 228, "Blinky", 0xFFFF0000));
+		ghosts.add(new Ghost(this, 588, 228, "Pinky", 0xFFE44B8D));
+		ghosts.add(new Ghost(this, 422, 204, "Inky", 0xFF00FFFF));
+		ghosts.add(new Ghost(this, 252, 204, "Clyde", 0xFFFFA500));
+	}
 
 	/**
 	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert das
@@ -180,19 +197,54 @@ public class GameController extends PApplet {
 	}
 
 	/**
+	 * Positioniert die PowerPills
+	 */
+	private void initializePowerPills() {
+		int[][] pos = { { 2, 2 }, { 25, 2 }, { 10, 6 }, { 17, 6 } };
+
+		for (int [] p : pos) {
+				PowerPill pP = new PowerPill(this, 12 + p[0] * gridSize, 12 + p[1] * gridSize);
+				powerPills.add(pP);
+			}
+	}
+
+	/**
 	 * Entfernt Gegenstände die Pac-Man einsammelt und addiert ihren Wert zum
 	 * Punktestand des Spielers
 	 */
-	private void collectItems() {
+	private void collectItem() {
 
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			double distance = calculateDistance(player, p);
 			if (distance < 10) {
 				points.remove(i);
-				player.setScore(player.getScore() + 5);
+				player.setScore(player.getScore() + p.getValue());
 			}
 		}
+		
+		for (int i = 0; i < powerPills.size(); i++) {
+			PowerPill p = powerPills.get(i);
+			double distance = calculateDistance(player, p);
+			if (distance < 10) {
+				powerPills.remove(i);
+				player.setScore(player.getScore() + p.getValue());
+			}
+		}
+	}
+	
+	/**
+	 * Zieht bei Kollision mit Geistern ein Leben ab
+	 */
+	private void removeLife() {
+		for (Ghost g : ghosts) {
+		double distance = calculateDistance(player, g);
+	
+			if (distance == 0) {
+				player.setLives(player.getLives() - 1);
+			}
+		}
+		
 	}
 
 	/**
@@ -210,14 +262,13 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Bewegt die Geister (zufällig) auf dem Spielfeld und lässt sie Pac-Man
-	 * verfolgen, wenn er ihnen zu nahe kommt
+	 * Bewegt die Geister so auf dem Spielfeld, dass sie Pac-Man verfolgen
 	 */
-	private void moveGhosts(Ghost g) {
+	private void moveGhost(Ghost g) {
 		if (keyPressed == true) {
 			counter++;
 			if (counter % 7 == 0) {
-				//switch case with math random
+				// switch case with math random
 				if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
 					g.setYPos(g.getYPos() - step);
 				} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {

@@ -18,7 +18,7 @@ public class Point extends Item {
 	 * @param yPos y-Position des Punkt-Elements
 	 */
 	public Point(PApplet window, int xPos, int yPos) {
-		super(window, xPos, yPos, 5, 5, "Punkt", 5, 0xFFD99722);
+		super(window, xPos, yPos, 5, 5, 5, 0xFFD99722);
 		
 	}
 }

@@ -9,7 +9,6 @@ import processing.core.PApplet;
  */
 public abstract class Item extends Element implements Draw {
 	
-	private String type;
 	private int value;
 	private int color;
 	
@@ -19,9 +18,8 @@ public abstract class Item extends Element implements Draw {
 	 * @param value Punkte-Wert des Gegenstandes
 	 * @param color Farbe des Gegenstandes
 	 */
-	public Item(PApplet window, int xPos, int yPos, int length, int width, String type, int value, int color) {
+	public Item(PApplet window, int xPos, int yPos, int length, int width, int value, int color) {
 		super(window, xPos, yPos, length, width);
-		this.type = type;
 		this.value = value;
 		this.color = color;
 	}
@@ -33,5 +31,9 @@ public abstract class Item extends Element implements Draw {
 		getWindow().fill(color);
 		getWindow().ellipse(xPos, yPos, length, length);
 		
+	}
+
+	public int getValue() {
+		return value;
 	}
 }

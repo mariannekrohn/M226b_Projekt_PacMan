@@ -20,8 +20,8 @@ public class PowerPill extends Item {
 	 * @param value
 	 * @param color
 	 */
-	public PowerPill(PApplet window, int xPos, int yPos, int length, int width, String type, int value, int color) {
-		super(window, xPos, yPos, length, width, type, value, color);
+	public PowerPill(PApplet window, int xPos, int yPos) {
+		super(window, xPos, yPos, 12, 12, 50, 0xFFD99722);
 	}
 
 
