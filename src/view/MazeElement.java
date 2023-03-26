@@ -30,4 +30,6 @@ public class MazeElement extends Element {
 		getWindow().fill(0, 51, 102);
 		getWindow().rect(xPos, yPos, gridSize, gridSize);
 	}
+	
+
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import model.Element;
 import model.Character;
 import model.Ghost;
-import model.Item;
 import model.PacMan;
 import model.Point;
 import model.PowerPill;
@@ -32,9 +31,9 @@ public class GameController extends PApplet {
 	PacMan player;
 	ArrayList<Ghost> ghosts;
 
-
 	ArrayList<Point> points;
 	ArrayList<PowerPill> powerPills;
+
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -65,6 +64,12 @@ public class GameController extends PApplet {
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
+	enum State {
+		START, PLAY, RESET, END_WIN, END_lOOSE
+	};
+
+	State gameState = State.START;
+
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
 	}
@@ -91,9 +96,29 @@ public class GameController extends PApplet {
 
 	public void draw() {
 		background(0);
-		displayMaze();
-		drawGame();
+
+		switch (gameState) {
+		case START:
+			displayMaze();
+			drawStartScreen();
+			break;
+		case PLAY:
+			displayMaze();
+			drawGame();
+			break;
+		case RESET:
+			displayMaze();
+			drawReset();
+			break;
+		case END_WIN:
+			drawSuccess();
+			break;
+		case END_lOOSE:
+			drawFail();
+		}
+
 	}
+
 
 	/**
 	 * Initialisiert alle Figuren und Gegenstände
@@ -101,9 +126,8 @@ public class GameController extends PApplet {
 	public void initializeGame() {
 		window = new PApplet();
 
-		player = new PacMan(this, 12, 468);
+		player = new PacMan(this, 12, 468, -5, 3);
 		ghosts = new ArrayList<>();
-
 
 		points = new ArrayList<>();
 		powerPills = new ArrayList<>();
@@ -117,32 +141,95 @@ public class GameController extends PApplet {
 	 * Zeichnet das Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
 	public void drawGame() {
-
 		collectItem();
 		removeLife();
 
 		for (Point p : points) {
 			p.draw();
 		}
-		
-		for (PowerPill p : powerPills ) {
+
+		for (PowerPill p : powerPills) {
 			p.draw();
 		}
 
 		player.draw();
+
+		for (Ghost g : ghosts) {
+			g.draw();
+			moveGhost(g);
+		}
+
+		textAlign(LEFT);
+		textSize(20);
+		fill(150);
+		text("Score: " + player.getScore(), 20, 504);
+
+		textSize(20);
+		fill(150);
+		text("Lives: " + player.getLives(), 150, 504);
+	}
+
+	/**
+	 * Zeichnet den Startbildschirm des Spiels
+	 */
+	public void drawStartScreen() {
+		fill(0, 0, 0, 150);
+		rect(0, 0, y * gridSize, (x + 2) * gridSize);
+
+		textAlign(CENTER);
+		textSize(20);
+		fill(190);
+		text("Navigate With Your Arrow Keys", ((y * gridSize) / 2), 175);
+
+		textSize(50);
+		fill(0xFFD99722);
+		text("Press Space", ((y * gridSize) / 2), 275);
+		text("to Start", ((y * gridSize) / 2), 325);
+	}
+
+	/**
+	 * Setzt alle Spielfiguren auf ihren Ausgangspunkt zurück, nachdem Pac-Man ein
+	 * Leben verloren hat.
+	 */
+	public void drawReset() {
+		
+		player = new PacMan(this, 12, 468, player.getScore(), player.getLives() - 1);
+
+		player.draw();
+		
+		ghosts = new ArrayList<>();
+		initializeGhosts();
 		
 		for (Ghost g : ghosts) {
 			g.draw();
 			moveGhost(g);
 		}
 		
-		textSize(20);
-		fill(150);
-		text("Score: " + player.getScore(), 20, 504);
 		
+		for (Point p : points) {
+			p.draw();
+		}
+
+		for (PowerPill p : powerPills) {
+			p.draw();
+		}
+		gameState = State.PLAY;
+
+	}
+
+	public void drawSuccess() {
 		textSize(20);
 		fill(150);
-		text("Lives: " + player.getLives(), 150, 504);
+		text("You WIn! ", 200, 300);
+
+	}
+	
+
+	public void drawFail() {
+		textSize(20);
+		fill(150);
+		text("You loose", 200, 300);
+
 	}
 
 	/**
@@ -160,7 +247,6 @@ public class GameController extends PApplet {
 	 * Gibt den Labryinth-Elementen Farbe und Form.
 	 */
 	private void displayMaze() {
-
 		for (int i = 0; i < y; i++) {
 			for (int j = 1; j < x; j++) {
 				if (maze[i][j] == 1) {
@@ -169,7 +255,7 @@ public class GameController extends PApplet {
 			}
 		}
 	}
-	
+
 	/**
 	 * Initialisiert die Geister
 	 */
@@ -202,10 +288,10 @@ public class GameController extends PApplet {
 	private void initializePowerPills() {
 		int[][] pos = { { 2, 2 }, { 25, 2 }, { 10, 6 }, { 17, 6 } };
 
-		for (int [] p : pos) {
-				PowerPill pP = new PowerPill(this, 12 + p[0] * gridSize, 12 + p[1] * gridSize);
-				powerPills.add(pP);
-			}
+		for (int[] p : pos) {
+			PowerPill pP = new PowerPill(this, 12 + p[0] * gridSize, 12 + p[1] * gridSize);
+			powerPills.add(pP);
+		}
 	}
 
 	/**
@@ -213,6 +299,11 @@ public class GameController extends PApplet {
 	 * Punktestand des Spielers
 	 */
 	private void collectItem() {
+
+		if (points.size() == 0) {
+			gameState = State.END_WIN;
+			return;
+		}
 
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
@@ -222,7 +313,7 @@ public class GameController extends PApplet {
 				player.setScore(player.getScore() + p.getValue());
 			}
 		}
-		
+
 		for (int i = 0; i < powerPills.size(); i++) {
 			PowerPill p = powerPills.get(i);
 			double distance = calculateDistance(player, p);
@@ -232,19 +323,20 @@ public class GameController extends PApplet {
 			}
 		}
 	}
-	
+
 	/**
 	 * Zieht bei Kollision mit Geistern ein Leben ab
 	 */
 	private void removeLife() {
 		for (Ghost g : ghosts) {
-		double distance = calculateDistance(player, g);
-	
+			double distance = calculateDistance(player, g);
+
 			if (distance == 0) {
-				player.setLives(player.getLives() - 1);
+				gameState = State.RESET;
+				break;
 			}
 		}
-		
+
 	}
 
 	/**
@@ -339,28 +431,35 @@ public class GameController extends PApplet {
 	 * Spielfelds bewegen kann.
 	 */
 	public void keyPressed() {
-		switch (keyCode) {
-		case UP:
-			if (allowMovementUp(player) == true) {
-				player.moveUp();
+		if (gameState == State.PLAY) {
+			switch (keyCode) {
+			case UP:
+				if (allowMovementUp(player) == true) {
+					player.moveUp();
+				}
+				break;
+			case DOWN:
+				if (allowMovementDown(player) == true) {
+					player.moveDown();
+				}
+				break;
+			case RIGHT:
+				if (allowMovementRight(player) == true) {
+					player.moveRight();
+				}
+				break;
+			case LEFT:
+				if (allowMovementLeft(player) == true) {
+					player.moveLeft();
+				}
+				break;
 			}
-			break;
-		case DOWN:
-			if (allowMovementDown(player) == true) {
-				player.moveDown();
+		} else if (key == ' ') {
+			if (gameState == State.START) {
+				gameState = State.PLAY;
+			} else {
+				gameState = State.START;
 			}
-			break;
-		case RIGHT:
-			if (allowMovementRight(player) == true) {
-				player.moveRight();
-			}
-			break;
-		case LEFT:
-			if (allowMovementLeft(player) == true) {
-				player.moveLeft();
-			}
-			break;
-
 		}
 
 	}

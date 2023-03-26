@@ -22,10 +22,10 @@ public class PacMan extends Character implements Move {
 	 * 
 	 * @param window
 	 */
-	public PacMan(PApplet window, int xPos, int yPos) {
+	public PacMan(PApplet window, int xPos, int yPos, int score, int lives) {
 		super(window, xPos, yPos, 16, 16, "Pac Man", 0xFFFFFF00);
-		this.score = -5; // max. 1655
-		this.lives = 3;
+		this.score = score;
+		this.lives = lives;
 		this.step = 24;
 	}
 
