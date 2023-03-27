@@ -28,7 +28,7 @@ public class TestPacMan {
 		yPos = 100;
 		step = 24;
 		
-		sut = new PacMan(doc, xPos, yPos);
+		sut = new PacMan(doc, xPos, yPos, 1, 1);
 		
 	}
 	

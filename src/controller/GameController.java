@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import model.Element;
+import model.Fruit;
 import model.Character;
 import model.Ghost;
 import model.PacMan;
@@ -33,7 +34,7 @@ public class GameController extends PApplet {
 
 	ArrayList<Point> points;
 	ArrayList<PowerPill> powerPills;
-
+	ArrayList<Fruit> fruit;
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -65,7 +66,7 @@ public class GameController extends PApplet {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 	enum State {
-		START, PLAY, RESET, END_WIN, END_lOOSE
+		START, PLAY, RESET, END_WIN, END_LOOSE
 	};
 
 	State gameState = State.START;
@@ -74,9 +75,7 @@ public class GameController extends PApplet {
 		PApplet.main("controller.GameController");
 	}
 
-	// Processing-Methoden
 	public void setup() {
-
 	}
 
 	public void settings() {
@@ -113,12 +112,11 @@ public class GameController extends PApplet {
 		case END_WIN:
 			drawSuccess();
 			break;
-		case END_lOOSE:
+		case END_LOOSE:
 			drawFail();
 		}
 
 	}
-
 
 	/**
 	 * Initialisiert alle Figuren und Gegenstände
@@ -131,10 +129,12 @@ public class GameController extends PApplet {
 
 		points = new ArrayList<>();
 		powerPills = new ArrayList<>();
+		fruit = new ArrayList<>();
 
 		initializeGhosts();
 		initializePointItems();
 		initializePowerPills();
+		initializeFruit();
 	}
 
 	/**
@@ -150,6 +150,14 @@ public class GameController extends PApplet {
 
 		for (PowerPill p : powerPills) {
 			p.draw();
+		}
+
+		for (Fruit f : fruit) {
+			f.draw();
+			int random = (int) (25 + Math.random() * 500);
+			if (counter == random) {
+				fruit = new ArrayList<>();
+			}
 		}
 
 		player.draw();
@@ -188,24 +196,22 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Setzt alle Spielfiguren auf ihren Ausgangspunkt zurück, nachdem Pac-Man ein
-	 * Leben verloren hat.
+	 * Setzt alle Spielfiguren auf ihren Ausgangspunkt zurück, nachdem Pac-Man auf
+	 * einen Geist gestossen ist und reduziert das Leben des Spielers um 1
 	 */
 	public void drawReset() {
-		
 		player = new PacMan(this, 12, 468, player.getScore(), player.getLives() - 1);
 
 		player.draw();
-		
+
 		ghosts = new ArrayList<>();
 		initializeGhosts();
-		
+
 		for (Ghost g : ghosts) {
 			g.draw();
 			moveGhost(g);
 		}
-		
-		
+
 		for (Point p : points) {
 			p.draw();
 		}
@@ -213,22 +219,25 @@ public class GameController extends PApplet {
 		for (PowerPill p : powerPills) {
 			p.draw();
 		}
+		
+		delay(500);
 		gameState = State.PLAY;
 
 	}
 
 	public void drawSuccess() {
-		textSize(20);
-		fill(150);
-		text("You WIn! ", 200, 300);
+		textAlign(CENTER);
+		textSize(50);
+		fill(0xFFD99722);
+		text("YOU WIN!", ((y * gridSize) / 2), 275);
 
 	}
-	
 
 	public void drawFail() {
-		textSize(20);
-		fill(150);
-		text("You loose", 200, 300);
+		textAlign(CENTER);
+		textSize(50);
+		fill(0, 51, 102);
+		text("YOU LOOSE!", ((y * gridSize) / 2), 275);
 
 	}
 
@@ -260,10 +269,10 @@ public class GameController extends PApplet {
 	 * Initialisiert die Geister
 	 */
 	private void initializeGhosts() {
-		ghosts.add(new Ghost(this, 84, 228, "Blinky", 0xFFFF0000));
-		ghosts.add(new Ghost(this, 588, 228, "Pinky", 0xFFE44B8D));
-		ghosts.add(new Ghost(this, 422, 204, "Inky", 0xFF00FFFF));
-		ghosts.add(new Ghost(this, 252, 204, "Clyde", 0xFFFFA500));
+		ghosts.add(new Ghost(this, 156, 132, "Blinky", 0xFFFF0000));
+		ghosts.add(new Ghost(this, 516, 132, "Pinky", 0xFFE44B8D));
+		ghosts.add(new Ghost(this, 372, 252, "Inky", 0xFF00FFFF));
+		ghosts.add(new Ghost(this, 300, 252, "Clyde", 0xFFFFA500));
 	}
 
 	/**
@@ -295,6 +304,19 @@ public class GameController extends PApplet {
 	}
 
 	/**
+	 * Positioniert die Früchte
+	 */
+	private void initializeFruit() {
+		int random = (int) (0 + (Math.random() * 3));
+		System.out.println(random);
+
+		int[][] pos = { { 3, 10 }, { 14, 18 }, { 20, 13 }, { 25, 0 } };
+
+		Fruit fr = new Fruit(this, 12 + pos[random][0] * gridSize, 12 + pos[random][1] * gridSize);
+		fruit.add(fr);
+	}
+
+	/**
 	 * Entfernt Gegenstände die Pac-Man einsammelt und addiert ihren Wert zum
 	 * Punktestand des Spielers
 	 */
@@ -322,12 +344,25 @@ public class GameController extends PApplet {
 				player.setScore(player.getScore() + p.getValue());
 			}
 		}
+
+		for (int i = 0; i < fruit.size(); i++) {
+			Fruit f = fruit.get(i);
+			double distance = calculateDistance(player, f);
+			if (distance < 10) {
+				fruit.remove(i);
+				player.setScore(player.getScore() + f.getValue());
+			}
+		}
 	}
 
 	/**
 	 * Zieht bei Kollision mit Geistern ein Leben ab
 	 */
 	private void removeLife() {
+		if (player.getLives() == 0) {
+			gameState = State.END_LOOSE;
+		}
+
 		for (Ghost g : ghosts) {
 			double distance = calculateDistance(player, g);
 
@@ -336,7 +371,6 @@ public class GameController extends PApplet {
 				break;
 			}
 		}
-
 	}
 
 	/**
@@ -354,25 +388,24 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Bewegt die Geister so auf dem Spielfeld, dass sie Pac-Man verfolgen
+	 * Bewegt die Geister in zufälliger Geschwindigkeit so auf dem Spielfeld, dass
+	 * sie Pac-Man verfolgen
 	 */
 	private void moveGhost(Ghost g) {
-		if (keyPressed == true) {
-			counter++;
-			if (counter % 7 == 0) {
-				// switch case with math random
-				if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
-					g.setYPos(g.getYPos() - step);
-				} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
-					g.setYPos(g.getYPos() + step);
-				} else if (allowMovementLeft(g) == true && player.getXPos() < g.getXPos()) {
-					g.setXPos(g.getXPos() - step);
-				} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
-					g.setXPos(g.getXPos() + step);
-				}
+		int random = (int) (10 + (Math.random() * 50));
+
+		if (counter % random == 0) {
+
+			if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
+				g.setYPos(g.getYPos() - step);
+			} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
+				g.setYPos(g.getYPos() + step);
+			} else if (allowMovementLeft(g) == true && player.getXPos() < g.getXPos()) {
+				g.setXPos(g.getXPos() - step);
+			} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
+				g.setXPos(g.getXPos() + step);
 			}
 		}
-
 	}
 
 	private int convertPosToIndex(int pos) {
@@ -431,6 +464,8 @@ public class GameController extends PApplet {
 	 * Spielfelds bewegen kann.
 	 */
 	public void keyPressed() {
+		counter++;
+
 		if (gameState == State.PLAY) {
 			switch (keyCode) {
 			case UP:
@@ -457,7 +492,7 @@ public class GameController extends PApplet {
 		} else if (key == ' ') {
 			if (gameState == State.START) {
 				gameState = State.PLAY;
-			} else {
+			} else if (gameState == State.END_WIN || gameState == State.END_LOOSE) {
 				gameState = State.START;
 			}
 		}
