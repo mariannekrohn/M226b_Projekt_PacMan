@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Element;
 import model.PacMan;
 import processing.core.PApplet;
 
@@ -21,11 +22,12 @@ public class TestPacMan {
 
 	@Before
 	public void setup() {
-		// Mocken der Klasse
-		PApplet doc = Mockito.mock(PApplet.class);
+		Element doc = Mockito.mock(Element.class);
+			when(doc.getWindowHeight()).thenReturn(72);
+			when(doc.getWindowWidth()).thenReturn(72);
 		
-		xPos = 100;
-		yPos = 100;
+		xPos = 36;
+		yPos = 36;
 		step = 24;
 		
 		sut = new PacMan(doc, xPos, yPos, 1, 1);
@@ -48,8 +50,23 @@ public class TestPacMan {
 	}
 	
 	@Test
+	public void testMoveUpLimit() {
+		testMoveUp();
+		sut.moveUp();
+		
+		assertEquals("should reset to 12", 12, sut.getYPos());
+	}
+	
+	@Test
 	public void testMoveDown() {
 		
+		sut.moveDown();
+		System.out.println(sut.getYPos());
+		assertEquals(yPos + step, sut.getYPos());
+	}
+	
+	public void testMoveDownLimit() {
+		sut.moveDown();
 		sut.moveDown();
 		
 		assertEquals(yPos + step, sut.getYPos());

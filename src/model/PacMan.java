@@ -16,9 +16,8 @@ public class PacMan extends Character implements Move {
 	private int step;
 
 	/**
-	 * Konstruktor 
-	 * Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte und
-	 * definiert die Bewegungsgrösse des Charakters
+	 * Konstruktor Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte
+	 * und definiert die Bewegungsgrösse des Charakters
 	 * 
 	 * @param window
 	 */
@@ -30,8 +29,8 @@ public class PacMan extends Character implements Move {
 	}
 
 	/**
-	 * Ermöglicht die Aufwärtsbewegung der PacMan-Figur bis der obere
-	 * Spielfeldrand erreicht ist.
+	 * Ermöglicht die Aufwärtsbewegung der PacMan-Figur bis der obere Spielfeldrand
+	 * erreicht ist.
 	 */
 	@Override
 	public void moveUp() {
@@ -41,19 +40,20 @@ public class PacMan extends Character implements Move {
 	}
 
 	/**
-	 * Ermöglicht die Abwärtsbewegung der PacMan-Figur bis der untere
-	 * Spielfeldrand erreicht ist.
+	 * Ermöglicht die Abwärtsbewegung der PacMan-Figur bis der untere Spielfeldrand
+	 * erreicht ist.
 	 */
 	@Override
 	public void moveDown() {
-		if (yPos < 468) {
+		if (yPos < getWindowHeight()) {
+		//if (yPos < 468) {
 			yPos += step;
 		}
 	}
 
 	/**
-	 * Ermöglicht die Linksbewegung der PacMan-Figur bis der linke
-	 * Spielfeldrand erreicht ist.
+	 * Ermöglicht die Linksbewegung der PacMan-Figur bis der linke Spielfeldrand
+	 * erreicht ist.
 	 */
 	@Override
 	public void moveLeft() {
@@ -63,12 +63,13 @@ public class PacMan extends Character implements Move {
 	}
 
 	/**
-	 * Ermöglicht die Rechtsbewegung der PacMan-Figur bis der rechte
-	 * Spielfeldrand erreicht ist.
+	 * Ermöglicht die Rechtsbewegung der PacMan-Figur bis der rechte Spielfeldrand
+	 * erreicht ist.
 	 */
 	@Override
 	public void moveRight() {
-		if (xPos < 660) {
+		if(xPos < getWindowWidth()) {
+//		if (xPos < 660) {
 			xPos += step;
 		}
 	}

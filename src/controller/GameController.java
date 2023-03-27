@@ -95,6 +95,7 @@ public class GameController extends PApplet {
 
 	public void draw() {
 		background(0);
+		System.out.println(player.getYPos());
 
 		switch (gameState) {
 		case START:
