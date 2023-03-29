@@ -10,6 +10,8 @@ import processing.core.PApplet;
  */
 public class MazeElement extends Element {
 	
+	private int height;
+	private int width;
 	private int gridSize;
 
 	/**
@@ -19,7 +21,9 @@ public class MazeElement extends Element {
 	 * @param yPos y-Position des Feldes
 	 */
 	public MazeElement(PApplet window, int xPos, int yPos) {
-		super(window, xPos, yPos, 24, 24);
+		super(window, xPos, yPos);
+		this.height = 24;
+		this.width = 24;
 		this.gridSize = 24;
 	}
 

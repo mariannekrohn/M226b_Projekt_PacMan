@@ -12,8 +12,6 @@ public abstract class Element extends PApplet{
 	
 	protected int xPos;
 	protected int yPos;
-	protected int length;
-	protected int width;
 	private PApplet window;
 	
 	/**
@@ -21,21 +19,14 @@ public abstract class Element extends PApplet{
 	 * @param window
 	 * @param xPos x-Position des Elements
 	 * @param yPos y-Position des Elements
-	 * @param length Breite des Elements
-	 * @param height Höhe des Elements
 	 */
-	public Element(PApplet window, int xPos, int yPos, int length, int width) {
+	public Element(PApplet window, int xPos, int yPos) {
 		this.window = window;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.length = length;
-		this.width = width;
 	}
 
-	/**
-	 * Getter für PApplet
-	 * @return window als PApplet
-	 */
+
 	public PApplet getWindow() {
 		return window;
 	}

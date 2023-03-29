@@ -11,6 +11,7 @@ import model.Point;
 import model.PowerPill;
 import processing.core.PApplet;
 import view.MazeElement;
+import view.GameInfo;
 
 /**
  * Verwaltet die Spielkontrolle
@@ -19,7 +20,7 @@ import view.MazeElement;
  */
 public class GameController extends PApplet {
 
-	PApplet window;
+//	PApplet window;
 	private MazeElement[][] grid;
 	private int x;
 	private int y;
@@ -28,6 +29,7 @@ public class GameController extends PApplet {
 	int step;
 	int characterSize;
 	int counter;
+	GameInfo info;
 
 	PacMan player;
 	ArrayList<Ghost> ghosts;
@@ -84,6 +86,11 @@ public class GameController extends PApplet {
 		gridSize = 24;
 		grid = new MazeElement[y][x];
 		size(y * gridSize, (x + 2) * gridSize);
+		
+		
+		info = new GameInfo(this, y * gridSize, (x + 2) * gridSize);
+//		window = new PApplet();
+	
 
 		step = 24;
 		counter = 0;
@@ -95,12 +102,11 @@ public class GameController extends PApplet {
 
 	public void draw() {
 		background(0);
-		System.out.println(player.getYPos());
 
 		switch (gameState) {
 		case START:
 			displayMaze();
-			drawStartScreen();
+			info.drawStartScreen();
 			break;
 		case PLAY:
 			displayMaze();
@@ -111,10 +117,10 @@ public class GameController extends PApplet {
 			drawReset();
 			break;
 		case END_WIN:
-			drawSuccess();
+			info.drawSuccess();
 			break;
 		case END_LOOSE:
-			drawFail();
+			info.drawFail();
 		}
 
 	}
@@ -123,7 +129,6 @@ public class GameController extends PApplet {
 	 * Initialisiert alle Figuren und Gegenstände
 	 */
 	public void initializeGame() {
-		window = new PApplet();
 
 		player = new PacMan(this, 12, 468, -5, 3);
 		ghosts = new ArrayList<>();
@@ -179,24 +184,6 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Zeichnet den Startbildschirm des Spiels
-	 */
-	public void drawStartScreen() {
-		fill(0, 0, 0, 150);
-		rect(0, 0, y * gridSize, (x + 2) * gridSize);
-
-		textAlign(CENTER);
-		textSize(20);
-		fill(190);
-		text("Navigate With Your Arrow Keys", ((y * gridSize) / 2), 175);
-
-		textSize(50);
-		fill(0xFFD99722);
-		text("Press Space", ((y * gridSize) / 2), 275);
-		text("to Start", ((y * gridSize) / 2), 325);
-	}
-
-	/**
 	 * Setzt alle Spielfiguren auf ihren Ausgangspunkt zurück, nachdem Pac-Man auf
 	 * einen Geist gestossen ist und reduziert das Leben des Spielers um 1
 	 */
@@ -226,21 +213,6 @@ public class GameController extends PApplet {
 
 	}
 
-	public void drawSuccess() {
-		textAlign(CENTER);
-		textSize(50);
-		fill(0xFFD99722);
-		text("YOU WIN!", ((y * gridSize) / 2), 275);
-
-	}
-
-	public void drawFail() {
-		textAlign(CENTER);
-		textSize(50);
-		fill(0, 51, 102);
-		text("YOU LOOSE!", ((y * gridSize) / 2), 275);
-
-	}
 
 	/**
 	 * Teilt das Spielfeld in ein Raster von 21x28 Feldern auf.
@@ -309,7 +281,6 @@ public class GameController extends PApplet {
 	 */
 	private void initializeFruit() {
 		int random = (int) (0 + (Math.random() * 3));
-		System.out.println(random);
 
 		int[][] pos = { { 3, 10 }, { 14, 18 }, { 20, 13 }, { 25, 0 } };
 
