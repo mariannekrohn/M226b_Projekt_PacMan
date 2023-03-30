@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import controller.MyApplet;
 
 /**
@@ -35,6 +37,26 @@ public abstract class Item extends Element implements Draw {
 		window.ellipse(xPos, yPos, height, height);
 	}
 
+	/**
+	 * Berechnet die Distanz zwischen Item und PacMan, entfernt das Objekt aus der
+	 * entsprechenden ArrayList und addiert ihre Wert zum Punktestand des Spielers
+	 *
+	 * @param list List von Items über die iteriert wird
+	 * @param player PacMan-Figur
+	 */
+	public static void removeItem(List<Item> list, PacMan player) {
+		for (int i = 0; i < list.size(); i++) {
+			Item item = list.get(i);
+			double distance = Element.calculateDistance(player, item);
+			if (distance < 10) {
+				list.remove(i);
+				player.setScore(player.getScore() + item.getValue());
+				return;
+			}
+		
+		}
+
+	}
 	
 	public int getValue() {
 		return value;

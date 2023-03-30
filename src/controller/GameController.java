@@ -282,27 +282,9 @@ public class GameController extends MyApplet {
 			return;
 		}
 		
-		removeItem(points);
-		removeItem(powerPills);
-		removeItem(fruit);
-	}
-
-	/**
-	 * Berechnet die Distanz zwischen Item und PacMan, entfernt das Objekt aus der
-	 * entsprechenden ArrayList und addiert ihre Wert zum Punktestand des Spielers
-	 */
-	private void removeItem(List<Item> list) {
-		for (int i = 0; i < list.size(); i++) {
-			Item item = list.get(i);
-			double distance = Element.calculateDistance(player, item);
-			if (distance < 10) {
-				list.remove(i);
-				player.setScore(player.getScore() + item.getValue());
-				return;
-			}
-		
-		}
-
+		Item.removeItem(points, player);
+		Item.removeItem(powerPills, player);
+		Item.removeItem(fruit, player);
 	}
 
 	/**

@@ -45,9 +45,14 @@ public class GameInfo extends Element {
 	 */
 	public void drawSuccess() {
 		window.textAlign(PConstants.CENTER);
-		window.textSize(50);
+		window.textSize(60);
 		window.fill(0xFFD99722);
-		window.text("YOU WIN!", window.width / 2, 275);
+		window.text("YOU WIN!", window.width / 2, 225);
+		
+		window.textAlign(PConstants.CENTER);
+		window.textSize(20);
+		window.fill(190);
+		window.text("Press SPACE to Beat Your Highscore.", window.width / 2 , 335);
 
 	}
 
@@ -56,9 +61,14 @@ public class GameInfo extends Element {
 	 */
 	public void drawFail() {
 		window.textAlign(PConstants.CENTER);
-		window.textSize(50);
+		window.textSize(60);
 		window.fill(0, 51, 102);
-		window.text("YOU LOOSE!", window.width / 2, 275);
+		window.text("YOU LOOSE!", window.width / 2, 225);
+		
+		window.textAlign(PConstants.CENTER);
+		window.textSize(20);
+		window.fill(190);
+		window.text("Press SPACE to Try Again.", window.width / 2 , 335);
 
 	}
 
