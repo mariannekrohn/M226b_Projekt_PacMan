@@ -1,5 +1,6 @@
 package view;
 
+import model.Draw;
 import model.Element;
 import processing.core.PApplet;
 
@@ -8,10 +9,8 @@ import processing.core.PApplet;
  * 
  * @author Marianne Krohn
  */
-public class MazeElement extends Element {
+public class MazeElement extends Element implements Draw {
 	
-	private int height;
-	private int width;
 	private int gridSize;
 
 	/**
@@ -30,7 +29,8 @@ public class MazeElement extends Element {
 	/**
 	 * Füllt die einzelnen Felder auf dem Spielfeld aus
 	 */
-	public void display() {
+	@Override
+	public void draw() {
 		getWindow().fill(0, 51, 102);
 		getWindow().rect(xPos, yPos, gridSize, gridSize);
 	}

@@ -16,9 +16,12 @@ public class TestPacMan {
 	
 	PacMan sut;
 	
-	int xPos;
-	int yPos;
-	int step;
+	private int xPos;
+	private int yPos;
+	
+	private int score;
+	private int lives;
+	private int step;
 
 	@Before
 	public void setup() {
@@ -28,9 +31,12 @@ public class TestPacMan {
 		
 		xPos = 36;
 		yPos = 36;
+		score = 1;
+		lives = 1;
+		
 		step = 24;
 		
-		sut = new PacMan(doc, xPos, yPos, 1, 1);
+		sut = new PacMan(doc, xPos, yPos, score, lives);
 		
 	}
 	
@@ -38,8 +44,8 @@ public class TestPacMan {
 	public void testConstructor() {
 		assertEquals(yPos, sut.getYPos());
 		assertEquals(yPos, sut.getYPos());
-		assertEquals(xPos, sut.getXPos());
-		assertEquals(xPos, sut.getXPos());
+		assertEquals(score, sut.getScore());
+		assertEquals(lives, sut.getLives());
 	}
 
 	@Test

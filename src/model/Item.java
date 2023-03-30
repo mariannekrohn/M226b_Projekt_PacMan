@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 /**
@@ -34,9 +36,9 @@ public abstract class Item extends Element implements Draw {
 	public void draw() {
 		getWindow().fill(color);
 		getWindow().ellipse(xPos, yPos, height, height);
-		
 	}
 
+	
 	public int getValue() {
 		return value;
 	}

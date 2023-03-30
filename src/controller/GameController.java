@@ -1,11 +1,13 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Element;
 import model.Fruit;
 import model.Character;
 import model.Ghost;
+import model.Item;
 import model.PacMan;
 import model.Point;
 import model.PowerPill;
@@ -20,7 +22,6 @@ import view.GameInfo;
  */
 public class GameController extends PApplet {
 
-//	PApplet window;
 	private MazeElement[][] grid;
 	private int x;
 	private int y;
@@ -32,11 +33,11 @@ public class GameController extends PApplet {
 	GameInfo info;
 
 	PacMan player;
-	ArrayList<Ghost> ghosts;
+	List<Ghost> ghosts;
 
-	ArrayList<Point> points;
-	ArrayList<PowerPill> powerPills;
-	ArrayList<Fruit> fruit;
+	List<Point> points;
+	List<PowerPill> powerPills;
+	List<Fruit> fruit;
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -86,11 +87,6 @@ public class GameController extends PApplet {
 		gridSize = 24;
 		grid = new MazeElement[y][x];
 		size(y * gridSize, (x + 2) * gridSize);
-		
-		
-		info = new GameInfo(this, y * gridSize, (x + 2) * gridSize);
-//		window = new PApplet();
-	
 
 		step = 24;
 		counter = 0;
@@ -129,13 +125,14 @@ public class GameController extends PApplet {
 	 * Initialisiert alle Figuren und Gegenstände
 	 */
 	public void initializeGame() {
+		info = new GameInfo(this, y * gridSize, (x + 2) * gridSize);
 
 		player = new PacMan(this, 12, 468, -5, 3);
 		ghosts = new ArrayList<>();
 
-		points = new ArrayList<>();
-		powerPills = new ArrayList<>();
-		fruit = new ArrayList<>();
+		points = new ArrayList<Point>();
+		powerPills = new ArrayList<PowerPill>();
+		fruit = new ArrayList<Fruit>();
 
 		initializeGhosts();
 		initializePointItems();
@@ -170,17 +167,11 @@ public class GameController extends PApplet {
 
 		for (Ghost g : ghosts) {
 			g.draw();
-			moveGhost(g);
 		}
+		moveGhosts();
 
-		textAlign(LEFT);
-		textSize(20);
-		fill(150);
-		text("Score: " + player.getScore(), 20, 504);
+		player.displayStatus();
 
-		textSize(20);
-		fill(150);
-		text("Lives: " + player.getLives(), 150, 504);
 	}
 
 	/**
@@ -197,7 +188,7 @@ public class GameController extends PApplet {
 
 		for (Ghost g : ghosts) {
 			g.draw();
-			moveGhost(g);
+			moveGhosts();
 		}
 
 		for (Point p : points) {
@@ -207,12 +198,11 @@ public class GameController extends PApplet {
 		for (PowerPill p : powerPills) {
 			p.draw();
 		}
-		
+
 		delay(500);
 		gameState = State.PLAY;
 
 	}
-
 
 	/**
 	 * Teilt das Spielfeld in ein Raster von 21x28 Feldern auf.
@@ -232,7 +222,7 @@ public class GameController extends PApplet {
 		for (int i = 0; i < y; i++) {
 			for (int j = 1; j < x; j++) {
 				if (maze[i][j] == 1) {
-					grid[i][j].display();
+					grid[i][j].draw();
 				}
 			}
 		}
@@ -298,10 +288,14 @@ public class GameController extends PApplet {
 			gameState = State.END_WIN;
 			return;
 		}
+		
+		//removeItem(powerPills);
 
+		this.removeItem(points);
+		
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
-			double distance = calculateDistance(player, p);
+			double distance = Element.calculateDistance(player, p);
 			if (distance < 10) {
 				points.remove(i);
 				player.setScore(player.getScore() + p.getValue());
@@ -310,7 +304,7 @@ public class GameController extends PApplet {
 
 		for (int i = 0; i < powerPills.size(); i++) {
 			PowerPill p = powerPills.get(i);
-			double distance = calculateDistance(player, p);
+			double distance = Element.calculateDistance(player, p);
 			if (distance < 10) {
 				powerPills.remove(i);
 				player.setScore(player.getScore() + p.getValue());
@@ -319,12 +313,30 @@ public class GameController extends PApplet {
 
 		for (int i = 0; i < fruit.size(); i++) {
 			Fruit f = fruit.get(i);
-			double distance = calculateDistance(player, f);
+			double distance = Element.calculateDistance(player, f);
 			if (distance < 10) {
 				fruit.remove(i);
 				player.setScore(player.getScore() + f.getValue());
 			}
 		}
+	}
+
+	/**
+	 * Berechnet die Distanz, entfernt das Objekt aus dem Array und addiert die
+	 * Punkte
+	 */
+	private void removeItem(List<Item> list) {
+//		for (int i = 0; i < list.size(); i++) {
+//			Item item = list.get(i);
+//			double distance = Element.calculateDistance(player, item);
+//			if (distance < 10) {
+//				list.remove(i);
+//				player.setScore(player.getScore() + item.getValue());
+//				return;
+//			}
+//		
+		System.out.println("Hallo");
+
 	}
 
 	/**
@@ -336,7 +348,7 @@ public class GameController extends PApplet {
 		}
 
 		for (Ghost g : ghosts) {
-			double distance = calculateDistance(player, g);
+			double distance = Element.calculateDistance(player, g);
 
 			if (distance == 0) {
 				gameState = State.RESET;
@@ -345,25 +357,14 @@ public class GameController extends PApplet {
 		}
 	}
 
-	/**
-	 * Berechnet den Abstand zwischen zwei Objekten
-	 * 
-	 * @return distance Distanz als double
-	 */
-	private double calculateDistance(Element e1, Element e2) {
-		double distance = 0;
-		float a = abs(e1.getXPos() - e2.getXPos());
-		float b = abs(e1.getYPos() - e2.getYPos());
-
-		distance = Math.sqrt(a * a + b * b);
-		return distance;
-	}
 
 	/**
 	 * Bewegt die Geister in zufälliger Geschwindigkeit so auf dem Spielfeld, dass
 	 * sie Pac-Man verfolgen
 	 */
-	private void moveGhost(Ghost g) {
+	private void moveGhosts() {
+		
+		for(Ghost g: ghosts) {
 		int random = (int) (10 + (Math.random() * 50));
 
 		if (counter % random == 0) {
@@ -377,6 +378,7 @@ public class GameController extends PApplet {
 			} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
 				g.setXPos(g.getXPos() + step);
 			}
+		}
 		}
 	}
 

@@ -25,6 +25,20 @@ public class PacMan extends Character {
 		this.score = score;
 		this.lives = lives;
 	}
+	
+	/**
+	 * Zeigt den Punktestand und die Leben des Spielers an
+	 */
+	public void displayStatus() {
+		getWindow().textAlign(LEFT);
+		getWindow().textSize(20);
+		getWindow().fill(150);
+		getWindow().text("Score: " + getScore(), 20, 504);
+
+		getWindow().textSize(20);
+		getWindow().fill(150);
+		getWindow().text("Lives: " + getLives(), 150, 504);
+	}
 
 	public int getScore() {
 		return score;

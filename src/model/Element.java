@@ -25,6 +25,19 @@ public abstract class Element extends PApplet{
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
+	
+	/**
+	 * Berechnet den Abstand zwischen zwei Elementen
+	 * @return distance Distanz als double
+	 */
+	public static double calculateDistance(Element e1, Element e2) {
+		double distance = 0;
+		float a = abs(e1.getXPos() - e2.getXPos());
+		float b = abs(e1.getYPos() - e2.getYPos());
+
+		distance = Math.sqrt(a * a + b * b);
+		return distance;
+	}
 
 
 	public PApplet getWindow() {
@@ -39,21 +52,17 @@ public abstract class Element extends PApplet{
 		return window.width;
 	}
 
-
 	public int getXPos() {
 		return xPos;
 	}
-
 
 	public int getYPos() {
 		return yPos;
 	}
 
-
 	public void setXPos(int xPos) {
 		this.xPos = xPos;
 	}
-
 
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
