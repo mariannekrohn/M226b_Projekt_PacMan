@@ -1,5 +1,6 @@
 package model;
 
+import controller.MyApplet;
 import processing.core.PApplet;
 
 /**
@@ -20,7 +21,7 @@ public class PowerPill extends Item {
 	 * @param value
 	 * @param color
 	 */
-	public PowerPill(PApplet window, int xPos, int yPos) {
+	public PowerPill(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 12, 12, 50, 0xFFD99722);
 	}
 

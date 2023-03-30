@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-
-import processing.core.PApplet;
+import controller.MyApplet;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der Gegenstände.
@@ -12,7 +10,6 @@ import processing.core.PApplet;
 public abstract class Item extends Element implements Draw {
 	
 	private int height;
-	private int width;
 	private int value;
 	private int color;
 	
@@ -22,10 +19,9 @@ public abstract class Item extends Element implements Draw {
 	 * @param value Punkte-Wert des Gegenstandes
 	 * @param color Farbe des Gegenstandes
 	 */
-	public Item(PApplet window, int xPos, int yPos, int height, int width, int value, int color) {
+	public Item(MyApplet window, int xPos, int yPos, int height, int width, int value, int color) {
 		super(window, xPos, yPos);
 		this.height = height;
-		this.width = width;
 		this.value = value;
 		this.color = color;
 	}
@@ -33,9 +29,10 @@ public abstract class Item extends Element implements Draw {
 	/**
 	 * Zeichnet den Gegenstand
 	 */
+	@Override
 	public void draw() {
-		getWindow().fill(color);
-		getWindow().ellipse(xPos, yPos, height, height);
+		window.fill(color);
+		window.ellipse(xPos, yPos, height, height);
 	}
 
 	

@@ -20,7 +20,7 @@ import view.GameInfo;
  * 
  * @author Marianne Krohn
  */
-public class GameController extends PApplet {
+public class GameController extends MyApplet {
 
 	private MazeElement[][] grid;
 	private int x;
@@ -33,11 +33,11 @@ public class GameController extends PApplet {
 	GameInfo info;
 
 	PacMan player;
-	List<Ghost> ghosts;
+	ArrayList<Ghost> ghosts;
 
-	List<Point> points;
-	List<PowerPill> powerPills;
-	List<Fruit> fruit;
+	List<Item> points;
+	List<Item> powerPills;
+	List<Item> fruit;
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
@@ -130,9 +130,9 @@ public class GameController extends PApplet {
 		player = new PacMan(this, 12, 468, -5, 3);
 		ghosts = new ArrayList<>();
 
-		points = new ArrayList<Point>();
-		powerPills = new ArrayList<PowerPill>();
-		fruit = new ArrayList<Fruit>();
+		points = new ArrayList<>();
+		powerPills = new ArrayList<>();
+		fruit = new ArrayList<>();
 
 		initializeGhosts();
 		initializePointItems();
@@ -147,27 +147,17 @@ public class GameController extends PApplet {
 		collectItem();
 		removeLife();
 
-		for (Point p : points) {
-			p.draw();
+		drawItems(points);
+		drawItems(powerPills);
+		drawItems(fruit);
+		int random = (int) (25 + Math.random() * 500);
+		if (counter == random) {
+			fruit = new ArrayList<>();
 		}
 
-		for (PowerPill p : powerPills) {
-			p.draw();
-		}
-
-		for (Fruit f : fruit) {
-			f.draw();
-			int random = (int) (25 + Math.random() * 500);
-			if (counter == random) {
-				fruit = new ArrayList<>();
-			}
-		}
-
-		player.draw();
-
-		for (Ghost g : ghosts) {
-			g.draw();
-		}
+		player.draw();	
+		
+		drawGhosts();
 		moveGhosts();
 
 		player.displayStatus();
@@ -180,28 +170,14 @@ public class GameController extends PApplet {
 	 */
 	public void drawReset() {
 		player = new PacMan(this, 12, 468, player.getScore(), player.getLives() - 1);
-
 		player.draw();
 
 		ghosts = new ArrayList<>();
 		initializeGhosts();
-
-		for (Ghost g : ghosts) {
-			g.draw();
-			moveGhosts();
-		}
-
-		for (Point p : points) {
-			p.draw();
-		}
-
-		for (PowerPill p : powerPills) {
-			p.draw();
-		}
-
+		drawGhosts();
+		
 		delay(500);
 		gameState = State.PLAY;
-
 	}
 
 	/**
@@ -239,8 +215,7 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert das
-	 * Punkte-Array
+	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert die points ArrayList
 	 */
 	private void initializePointItems() {
 
@@ -255,7 +230,7 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Positioniert die PowerPills
+	 * Positioniert die PowerPills und initialisiert die powerPills ArrayList
 	 */
 	private void initializePowerPills() {
 		int[][] pos = { { 2, 2 }, { 25, 2 }, { 10, 6 }, { 17, 6 } };
@@ -267,7 +242,7 @@ public class GameController extends PApplet {
 	}
 
 	/**
-	 * Positioniert die Früchte
+	 * Positioniert die Früchte und initialisiert die fruits ArrayList
 	 */
 	private void initializeFruit() {
 		int random = (int) (0 + (Math.random() * 3));
@@ -277,70 +252,61 @@ public class GameController extends PApplet {
 		Fruit fr = new Fruit(this, 12 + pos[random][0] * gridSize, 12 + pos[random][1] * gridSize);
 		fruit.add(fr);
 	}
+	
+	/**
+	 * Iteriert über eine List und zeichnet alle enthaltenen Elemente
+	 */
+	public void drawItems(List<Item> list) {
+		for (Item e: list) {
+			e.draw();
+		}
+	}
+	
+	/**
+	 * Iteriert über die ghost ArrayList und zeichnet die enthaltenen
+	 * Charaktere
+	 */
+	public void drawGhosts() {
+		for (Ghost e: ghosts) {
+			e.draw();
+		}
+	}
 
 	/**
 	 * Entfernt Gegenstände die Pac-Man einsammelt und addiert ihren Wert zum
 	 * Punktestand des Spielers
 	 */
 	private void collectItem() {
-
 		if (points.size() == 0) {
 			gameState = State.END_WIN;
 			return;
 		}
 		
-		//removeItem(powerPills);
-
-		this.removeItem(points);
-		
-		for (int i = 0; i < points.size(); i++) {
-			Point p = points.get(i);
-			double distance = Element.calculateDistance(player, p);
-			if (distance < 10) {
-				points.remove(i);
-				player.setScore(player.getScore() + p.getValue());
-			}
-		}
-
-		for (int i = 0; i < powerPills.size(); i++) {
-			PowerPill p = powerPills.get(i);
-			double distance = Element.calculateDistance(player, p);
-			if (distance < 10) {
-				powerPills.remove(i);
-				player.setScore(player.getScore() + p.getValue());
-			}
-		}
-
-		for (int i = 0; i < fruit.size(); i++) {
-			Fruit f = fruit.get(i);
-			double distance = Element.calculateDistance(player, f);
-			if (distance < 10) {
-				fruit.remove(i);
-				player.setScore(player.getScore() + f.getValue());
-			}
-		}
+		removeItem(points);
+		removeItem(powerPills);
+		removeItem(fruit);
 	}
 
 	/**
-	 * Berechnet die Distanz, entfernt das Objekt aus dem Array und addiert die
-	 * Punkte
+	 * Berechnet die Distanz zwischen Item und PacMan, entfernt das Objekt aus der
+	 * entsprechenden ArrayList und addiert ihre Wert zum Punktestand des Spielers
 	 */
 	private void removeItem(List<Item> list) {
-//		for (int i = 0; i < list.size(); i++) {
-//			Item item = list.get(i);
-//			double distance = Element.calculateDistance(player, item);
-//			if (distance < 10) {
-//				list.remove(i);
-//				player.setScore(player.getScore() + item.getValue());
-//				return;
-//			}
-//		
-		System.out.println("Hallo");
+		for (int i = 0; i < list.size(); i++) {
+			Item item = list.get(i);
+			double distance = Element.calculateDistance(player, item);
+			if (distance < 10) {
+				list.remove(i);
+				player.setScore(player.getScore() + item.getValue());
+				return;
+			}
+		
+		}
 
 	}
 
 	/**
-	 * Zieht bei Kollision mit Geistern ein Leben ab
+	 * Zieht bei Kollision von PacMan mit Geistern ein Leben ab
 	 */
 	private void removeLife() {
 		if (player.getLives() == 0) {

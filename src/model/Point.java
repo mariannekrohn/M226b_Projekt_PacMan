@@ -1,6 +1,6 @@
 package model;
 
-import processing.core.PApplet;
+import controller.MyApplet;
 
 /**
  * Verwaltet die Eigenschaften der Punkte-Elemente die von 
@@ -17,20 +17,9 @@ public class Point extends Item {
 	 * @param xPos x-Position des Punkt-Elements
 	 * @param yPos y-Position des Punkt-Elements
 	 */
-	public Point(PApplet window, int xPos, int yPos) {
+	public Point(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 5, 5, 5, 0xFFD99722);
 		
 	}
 	
-	
-	/**
-	 * Konstruktor
-	 * @param type Art des Gegenstandes
-	 * @param value Punkte-Wert des Gegenstandes
-	 * @param color Farbe des Gegenstandes
-	 */
-	public Point(PApplet window, int xPos, int yPos, int height, int width, int value, int color) {
-		super(window, xPos, yPos,height, width, value, color);
-
-	}
 }

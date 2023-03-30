@@ -1,6 +1,6 @@
 package model;
 
-import processing.core.PApplet;
+import controller.MyApplet;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der Geister
@@ -17,7 +17,7 @@ public class Ghost extends Character {
 	 * @param name Name des Geistes
 	 * @param color Farbe des Geistes
 	 */
-	public Ghost(PApplet window, int xPos, int yPos, String name, int color) {
+	public Ghost(MyApplet window, int xPos, int yPos, String name, int color) {
 		super(window, xPos, yPos, 16, 16, name, color);
 	}
 

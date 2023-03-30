@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-
-import processing.core.PApplet;
+import controller.MyApplet;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der Früchte
@@ -10,8 +8,6 @@ import processing.core.PApplet;
  *
  */
 public class Fruit extends Item{
-
-	private ArrayList fruit;
 	
 	/**
 	 * Konstruktor
@@ -20,7 +16,7 @@ public class Fruit extends Item{
 	 * @param fruit Art der Frucht
 	 */
 
-	public Fruit(PApplet window, int xPos, int yPos) {
+	public Fruit(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 14, 14, 200, 0xFF009000);
 	}
 

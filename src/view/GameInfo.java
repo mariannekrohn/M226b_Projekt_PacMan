@@ -1,7 +1,9 @@
 package view;
 
+import controller.MyApplet;
 import model.Element;
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 public class GameInfo extends Element {
 	
@@ -14,7 +16,7 @@ public class GameInfo extends Element {
 	 * @param xPos
 	 * @param yPos
 	 */
-	public GameInfo(PApplet window, int xPos, int yPos) {
+	public GameInfo(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos);
 		this.gridSize = 24;
 	}
@@ -23,29 +25,29 @@ public class GameInfo extends Element {
 	 * Zeichnet den Startbildschirm des Spiels
 	 */
 	public void drawStartScreen() {
-		getWindow().fill(0, 0, 0, 150);
-		getWindow().rect(0, 0, getYPos() * gridSize, (getXPos() + 2) * gridSize);
+		window.fill(0, 0, 0, 150);
+		window.rect(0, 0, getYPos() * gridSize, (getXPos() + 2) * gridSize);
 		
 
-		getWindow().textAlign(getWindow().CENTER);
-		getWindow().textSize(20);
-		getWindow().fill(190);
-		getWindow().text("Navigate With Your Arrow Keys", getWindowWidth() / 2 , 175);
+		window.textAlign(PConstants.CENTER);
+		window.textSize(20);
+		window.fill(190);
+		window.text("Navigate With Your Arrow Keys", window.width / 2 , 175);
 
-		getWindow().textSize(50);
-		getWindow().fill(0xFFD99722);
-		getWindow().text("Press Space", getWindowWidth() / 2, 275);
-		getWindow(). text("to Start", getWindowWidth() / 2, 325);
+		window.textSize(50);
+		window.fill(0xFFD99722);
+		window.text("Press Space", window.width / 2, 275);
+		window. text("to Start", window.width / 2, 325);
 	}
 	
 	/**
 	 * Zeichnet den Endbildschirm des Spiels, wenn der Spieler gewonnen hat
 	 */
 	public void drawSuccess() {
-		getWindow().textAlign(getWindow().CENTER);
-		getWindow().textSize(50);
-		getWindow().fill(0xFFD99722);
-		getWindow().text("YOU WIN!", getWindowWidth() / 2, 275);
+		window.textAlign(PConstants.CENTER);
+		window.textSize(50);
+		window.fill(0xFFD99722);
+		window.text("YOU WIN!", window.width / 2, 275);
 
 	}
 
@@ -53,10 +55,10 @@ public class GameInfo extends Element {
 	 * Zeichnet den Endbildschirm des Spiels, wenn der Spieler verloren hat
 	 */
 	public void drawFail() {
-		getWindow().textAlign(getWindow().CENTER);
-		getWindow().textSize(50);
-		getWindow().fill(0, 51, 102);
-		getWindow().text("YOU LOOSE!", getWindowWidth() / 2, 275);
+		window.textAlign(PConstants.CENTER);
+		window.textSize(50);
+		window.fill(0, 51, 102);
+		window.text("YOU LOOSE!", window.width / 2, 275);
 
 	}
 

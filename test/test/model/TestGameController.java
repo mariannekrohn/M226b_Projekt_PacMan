@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestGameController {
 
 	@Test
-	public void testCalculateDistance() {
+	public void testConvertPosToArray() {
 		
 	}
 
