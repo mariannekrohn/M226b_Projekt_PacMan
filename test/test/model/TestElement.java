@@ -14,7 +14,6 @@ import model.PacMan;
 
 public class TestElement {
 
-	Element e;
 	PacMan p;
 	Ghost g;
 	

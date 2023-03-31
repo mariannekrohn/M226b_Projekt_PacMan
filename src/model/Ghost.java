@@ -7,18 +7,24 @@ import controller.MyApplet;
  * @author Marianne Krohn
  *
  */
-public class Ghost extends Character {
+public class Ghost extends Character implements Draw {
 
 	/**
 	 * Konstruktor
-	 * @param window PApplet
-	 * @param xPos x-Position des Geistes
-	 * @param yPos y-Position des Geistes
-	 * @param name Name des Geistes
-	 * @param color Farbe des Geistes
+	 * @param window	MyApplet
+	 * @param xPos		x-Position des Geistes
+	 * @param yPos 		y-Position des Geistes
+	 * @param name 		Name des Geistes
+	 * @param color 	Farbe des Geistes
 	 */
 	public Ghost(MyApplet window, int xPos, int yPos, String name, int color) {
 		super(window, xPos, yPos, 16, 16, name, color);
+	}
+	
+	@Override
+	public void draw() {
+		window.fill(getColor());
+		window.ellipse(xPos, yPos, getHeight(), getHeight());
 	}
 
 }

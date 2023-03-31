@@ -10,7 +10,7 @@ public class MyApplet extends PApplet {
 	}
 	
 	public int getWindowWidth() {
-		return width;
+		return width;	
 	}
 
 }

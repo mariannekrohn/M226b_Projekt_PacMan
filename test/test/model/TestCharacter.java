@@ -3,20 +3,17 @@ package test.model;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-import java.awt.Window;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import controller.MyApplet;
-import model.Element;
 import model.PacMan;
 
 public class TestCharacter {
 	
 	PacMan p;
-	MyApplet a;
+	MyApplet window;
 	
 	private int xPos;
 	private int yPos;
@@ -27,9 +24,9 @@ public class TestCharacter {
 	
 	@Before
 	public void setup() {
-		MyApplet a = Mockito.mock(MyApplet.class);
-			when(a.getWindowHeight()).thenReturn(72);
-			when(a.getWindowWidth()).thenReturn(72);
+		MyApplet window = Mockito.mock(MyApplet.class);
+			when(window.getWindowHeight()).thenReturn(72);
+			when(window.getWindowWidth()).thenReturn(72);
 			
 			xPos = 36;
 			yPos = 36;
@@ -38,7 +35,7 @@ public class TestCharacter {
 			
 			step = 24;
 			
-			p = new PacMan(a, xPos, yPos, score, lives);
+			p = new PacMan(window, xPos, yPos, 16, 16, score, lives);
 	}
 
 	@Test
@@ -53,15 +50,14 @@ public class TestCharacter {
 		p.moveUp();
 		p.moveUp();
 		
-		
-		assertEquals("should stay at current position", 12, p.getYPos());
+		assertEquals("should move up once and then stay at position", 12, p.getYPos());
 	}
 	
 	@Test
 	public void testMoveDown() {
 		p.moveDown();
 		
-		assertEquals(yPos + step, p.getYPos());
+		assertEquals("should move down", yPos + step, p.getYPos());
 	}
 	
 	@Test
@@ -70,14 +66,14 @@ public class TestCharacter {
 		p.moveDown();
 		
 
-		assertEquals(yPos + step, p.getYPos());
+		assertEquals("should move down once and then stay at position", yPos + step, p.getYPos());
 	}
 	
 	@Test
 	public void testMoveRight() {		
 		p.moveRight();
 		
-		assertEquals(xPos + step, p.getXPos());
+		assertEquals("should move right", xPos + step, p.getXPos());
 	}
 	
 	@Test
@@ -85,14 +81,14 @@ public class TestCharacter {
 		p.moveRight();
 		p.moveRight();
 		
-		assertEquals(xPos + step, p.getXPos());
+		assertEquals("should move right once and then stay at position", xPos + step, p.getXPos());
 	}
 	
 	@Test
 	public void testMoveLeft() {		
 		p.moveLeft();
 		
-		assertEquals(xPos - step, p.getXPos());
+		assertEquals("should move left", xPos - step, p.getXPos());
 	}
 	
 	@Test
@@ -100,7 +96,7 @@ public class TestCharacter {
 		p.moveLeft();
 		p.moveLeft();
 		
-		assertEquals(xPos - step, p.getXPos());
+		assertEquals("should move left once and then stay at position", xPos - step, p.getXPos());
 	}
 
 }

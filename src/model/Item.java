@@ -58,6 +58,15 @@ public abstract class Item extends Element implements Draw {
 
 	}
 	
+	/**
+	 * Iteriert über eine List und zeichnet alle enthaltenen Elemente
+	 */
+	public static void drawItems(List<Item> list) {
+		for (Item e: list) {
+			e.draw();
+		}
+	}
+	
 	public int getValue() {
 		return value;
 	}

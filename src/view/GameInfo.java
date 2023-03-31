@@ -2,7 +2,6 @@ package view;
 
 import controller.MyApplet;
 import model.Element;
-import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class GameInfo extends Element {

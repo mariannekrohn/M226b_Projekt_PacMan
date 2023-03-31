@@ -9,38 +9,38 @@ import controller.MyApplet;
  * @author Marianne Krohn
  *
  */
-public class Character extends Element implements Draw {
+public class Character extends Element {
 
-	private String name;
 	private int color;
 	private int step;
 	private int height;
+	private int width;
+	
 	/**
-	 * Konstruktor
 	 * 
-	 * @param window PApplet
-	 * @param xPos   x-Position des Charakters
-	 * @param yPos   y-Position des Charakters
-	 * @param length Länge des Charakaters
-	 * @param width  Breite des Charakters
-	 * @param name   Name des Charakters
-	 * @param color  Farbe des Charakters
+	 * @param window	MyApplet
+	 * @param xPos		x-Position des Charakters
+	 * @param yPos		y-Position des Charakters
+	 * @param height	Höhe des Charakaters
+	 * @param width		Breite des Charakters
+	 * @param name		Name des Charakters
+	 * @param color		Farbe des Charakters
 	 */
 	public Character(MyApplet window, int xPos, int yPos, int height, int width, String name, int color) {
 		super(window, xPos, yPos);
-		this.name = name;
 		this.height = height;
+		this.width = width;
 		this.color = color;
 		this.step = 24;
 	}
 
-	@Override
-	public void draw() {
-		window.fill(color);
-	//	get.Window(arc(xPos, yPos, height, height, 0, PI+QUARTER_PI, PIE);
-		window.ellipse(xPos, yPos, height, height);
-
-	}
+//	@Override
+//	public void draw() {
+//		window.fill(color);
+//	//	get.Window(arc(xPos, yPos, height, height, 0, PI+QUARTER_PI, PIE);
+//		window.ellipse(xPos, yPos, height, height);
+//
+//	}
 
 	/**
 	 * Ermöglicht die Aufwärtsbewegung eines Charakters bis der obere Spielfeldrand
@@ -57,7 +57,7 @@ public class Character extends Element implements Draw {
 	 * erreicht ist.
 	 */
 	public void moveDown() {
-		if (yPos < window.getWindowHeight()) {
+		if (yPos < window.getWindowHeight() - 12) {
 			yPos += step;
 		}
 	}
@@ -77,17 +77,20 @@ public class Character extends Element implements Draw {
 	 * erreicht ist.
 	 */
 	public void moveRight() {
-		if (xPos < window.getWindowWidth()) {
+		if (xPos < window.getWindowWidth() - 12) {
 			xPos += step;
 		}
 	}
-
-	public String getName() {
-		return name;
+	
+	public int getColor() {
+		return color;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public int getHeight() {
+		return height;
 	}
 
+	public int getWidth() {
+		return width;
+	}
 }

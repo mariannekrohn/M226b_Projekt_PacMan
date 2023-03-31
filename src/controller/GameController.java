@@ -35,6 +35,7 @@ public class GameController extends MyApplet {
 	PacMan player;
 	ArrayList<Ghost> ghosts;
 
+
 	List<Item> points;
 	List<Item> powerPills;
 	List<Item> fruit;
@@ -93,7 +94,6 @@ public class GameController extends MyApplet {
 
 		initializeGrid();
 		initializeGame();
-
 	}
 
 	public void draw() {
@@ -127,7 +127,7 @@ public class GameController extends MyApplet {
 	public void initializeGame() {
 		info = new GameInfo(this, y * gridSize, (x + 2) * gridSize);
 
-		player = new PacMan(this, 12, 468, -5, 3);
+		player = new PacMan(this, 12, 468, 16, 16, -5, 3);
 		ghosts = new ArrayList<>();
 
 		points = new ArrayList<>();
@@ -144,12 +144,12 @@ public class GameController extends MyApplet {
 	 * Zeichnet das Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
 	public void drawGame() {
-		collectItem();
+		collectItems();
 		removeLife();
 
-		drawItems(points);
-		drawItems(powerPills);
-		drawItems(fruit);
+		Item.drawItems(points);
+		Item.drawItems(powerPills);
+		Item.drawItems(fruit);
 		int random = (int) (25 + Math.random() * 500);
 		if (counter == random) {
 			fruit = new ArrayList<>();
@@ -169,7 +169,7 @@ public class GameController extends MyApplet {
 	 * einen Geist gestossen ist und reduziert das Leben des Spielers um 1
 	 */
 	public void drawReset() {
-		player = new PacMan(this, 12, 468, player.getScore(), player.getLives() - 1);
+		player = new PacMan(this, 12, 468, 16, 16, player.getScore(), player.getLives() - 1);
 		player.draw();
 
 		ghosts = new ArrayList<>();
@@ -253,14 +253,14 @@ public class GameController extends MyApplet {
 		fruit.add(fr);
 	}
 	
-	/**
-	 * Iteriert über eine List und zeichnet alle enthaltenen Elemente
-	 */
-	public void drawItems(List<Item> list) {
-		for (Item e: list) {
-			e.draw();
-		}
-	}
+//	/**
+//	 * Iteriert über eine List und zeichnet alle enthaltenen Elemente
+//	 */
+//	public void drawItems(List<Item> list) {
+//		for (Item e: list) {
+//			e.draw();
+//		}
+//	}
 	
 	/**
 	 * Iteriert über die ghost ArrayList und zeichnet die enthaltenen
@@ -276,7 +276,7 @@ public class GameController extends MyApplet {
 	 * Entfernt Gegenstände die Pac-Man einsammelt und addiert ihren Wert zum
 	 * Punktestand des Spielers
 	 */
-	private void collectItem() {
+	private void collectItems() {
 		if (points.size() == 0) {
 			gameState = State.END_WIN;
 			return;
@@ -412,10 +412,9 @@ public class GameController extends MyApplet {
 				break;
 			}
 		} else if (key == ' ') {
-			if (gameState == State.START) {
+			if (gameState == State.START || gameState == State.END_WIN || gameState == State.END_LOOSE) {
 				gameState = State.PLAY;
-			} else if (gameState == State.END_WIN || gameState == State.END_LOOSE) {
-				gameState = State.START;
+				initializeGame();
 			}
 		}
 

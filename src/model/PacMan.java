@@ -1,7 +1,7 @@
 package model;
 
 import controller.MyApplet;
-import processing.core.PApplet;
+import processing.core.PConstants;
 
 /**
  * Verwaltet die Eigenschaften und Funktionen der Pac-Man-Figur die vom Spieler
@@ -21,25 +21,23 @@ public class PacMan extends Character implements Draw {
 	 * 
 	 * @param window
 	 */
-	public PacMan(MyApplet window, int xPos, int yPos, int score, int lives) {
-		super(window, xPos, yPos, 16, 16, "Pac Man", 0xFFFFFF00);
+	public PacMan(MyApplet window, int xPos, int yPos, int height, int width, int score, int lives) {
+		super(window, xPos, yPos, height, width, "Pac Man", 0xFFFFFF00);
 		this.score = score;
 		this.lives = lives;
 	}
 	
-//	@Override
-//	public void draw() {
-//		getWindow().fill(0xFFFFFF00);
-//		getWindow().arc(xPos, yPos, height, height, 0, PI+QUARTER_PI, PIE);
-////		getWindow().ellipse(xPos, yPos, height, height);
-//
-//	}
+	@Override
+	public void draw() {
+		window.fill(0xFFFFFF00);
+		window.arc(xPos, yPos, getHeight(), getWidth(), MyApplet.radians(40), MyApplet.radians(320));
+	}
 	
 	/**
 	 * Zeigt den Punktestand und die Leben des Spielers an
 	 */
 	public void displayStatus() {
-		window.textAlign(window.LEFT);
+		window.textAlign(PConstants.LEFT);
 		window.textSize(20);
 		window.fill(150);
 		window.text("Score: " + getScore(), 20, 504);
