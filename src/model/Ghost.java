@@ -25,6 +25,5 @@ public class Ghost extends Character implements Draw {
 	public void draw() {
 		window.fill(getColor());
 		window.ellipse(xPos, yPos, getHeight(), getHeight());
-	}
-
+	}	
 }

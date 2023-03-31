@@ -82,6 +82,8 @@ public class Character extends Element {
 		}
 	}
 	
+	
+	
 	public int getColor() {
 		return color;
 	}

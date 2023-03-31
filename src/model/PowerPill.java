@@ -1,7 +1,6 @@
 package model;
 
 import controller.MyApplet;
-import processing.core.PApplet;
 
 /**
  * Verwaltet die Eigenschaften der PowerPills

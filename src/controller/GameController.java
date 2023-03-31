@@ -12,87 +12,64 @@ import model.PacMan;
 import model.Point;
 import model.PowerPill;
 import processing.core.PApplet;
-import view.MazeElement;
 import view.GameInfo;
+import view.Maze;
 
 /**
- * Verwaltet die Spielkontrolle
+ * Verwaltet die Eigenschaften und Fähigkeitne der Spielkontrolle
  * 
  * @author Marianne Krohn
  */
 public class GameController extends MyApplet {
 
-	private MazeElement[][] grid;
+	private int[][] mazePattern;
+	private Maze m;
+	
 	private int x;
 	private int y;
 	private int gridSize;
 
-	int step;
-	int characterSize;
-	int counter;
-	GameInfo info;
+	private int step;
+	private int counter;
+	private GameInfo info;
 
-	PacMan player;
-	ArrayList<Ghost> ghosts;
+	private PacMan player;
+	private ArrayList<Ghost> ghosts;
 
+	private List<Item> points;
+	private List<Item> powerPills;
+	private List<Item> fruit;
 
-	List<Item> points;
-	List<Item> powerPills;
-	List<Item> fruit;
-
-	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
-			{ 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
-			{ 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
-			{ 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
-			{ 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0 },
-			{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
+	
+	
 	enum State {
 		START, PLAY, RESET, END_WIN, END_LOOSE
 	};
 
 	State gameState = State.START;
 
+	
+	
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
 	}
 
-	public void setup() {
-	}
+
 
 	public void settings() {
-		y = maze.length;
-		x = maze[0].length;
+		m = new Maze(this, 0, 0);
+		mazePattern = m.getMaze();
+		
+		y = mazePattern.length;
+		x = mazePattern[0].length;
+		
 		gridSize = 24;
-		grid = new MazeElement[y][x];
 		size(y * gridSize, (x + 2) * gridSize);
 
 		step = 24;
 		counter = 0;
 
-		initializeGrid();
+		m.initializeGrid();
 		initializeGame();
 	}
 
@@ -101,15 +78,15 @@ public class GameController extends MyApplet {
 
 		switch (gameState) {
 		case START:
-			displayMaze();
+			m.displayMaze();
 			info.drawStartScreen();
 			break;
 		case PLAY:
-			displayMaze();
+			m.displayMaze();
 			drawGame();
 			break;
 		case RESET:
-			displayMaze();
+			m.displayMaze();
 			drawReset();
 			break;
 		case END_WIN:
@@ -181,30 +158,6 @@ public class GameController extends MyApplet {
 	}
 
 	/**
-	 * Teilt das Spielfeld in ein Raster von 21x28 Feldern auf.
-	 */
-	private void initializeGrid() {
-		for (int i = 0; i < y; i++) {
-			for (int j = 1; j < x; j++) {
-				grid[i][j] = new MazeElement(this, i * gridSize, j * gridSize);
-			}
-		}
-	}
-
-	/**
-	 * Gibt den Labryinth-Elementen Farbe und Form.
-	 */
-	private void displayMaze() {
-		for (int i = 0; i < y; i++) {
-			for (int j = 1; j < x; j++) {
-				if (maze[i][j] == 1) {
-					grid[i][j].draw();
-				}
-			}
-		}
-	}
-
-	/**
 	 * Initialisiert die Geister
 	 */
 	private void initializeGhosts() {
@@ -221,7 +174,7 @@ public class GameController extends MyApplet {
 
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
-				if (maze[i][j] == 0) {
+				if (mazePattern[i][j] == 0) {
 					Point p = new Point(this, 12 + i * gridSize, 12 + j * gridSize);
 					points.add(p);
 				}
@@ -253,14 +206,6 @@ public class GameController extends MyApplet {
 		fruit.add(fr);
 	}
 	
-//	/**
-//	 * Iteriert über eine List und zeichnet alle enthaltenen Elemente
-//	 */
-//	public void drawItems(List<Item> list) {
-//		for (Item e: list) {
-//			e.draw();
-//		}
-//	}
 	
 	/**
 	 * Iteriert über die ghost ArrayList und zeichnet die enthaltenen
@@ -342,7 +287,7 @@ public class GameController extends MyApplet {
 	 */
 	private boolean allowMovementUp(Character c) {
 		return c.getYPos() - gridSize >= 12
-				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0;
+				&& mazePattern[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() - gridSize)] == 0;
 	}
 
 	/**
@@ -353,7 +298,7 @@ public class GameController extends MyApplet {
 	 */
 	private boolean allowMovementDown(Character c) {
 		return c.getYPos() + gridSize <= 468
-				&& maze[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() + gridSize)] == 0;
+				&& mazePattern[convertPosToIndex(c.getXPos())][convertPosToIndex(c.getYPos() + gridSize)] == 0;
 	}
 
 	/**
@@ -364,7 +309,7 @@ public class GameController extends MyApplet {
 	 */
 	private boolean allowMovementLeft(Character c) {
 		return c.getXPos() - gridSize >= 12
-				&& maze[convertPosToIndex(c.getXPos() - gridSize)][convertPosToIndex(c.getYPos())] == 0;
+				&& mazePattern[convertPosToIndex(c.getXPos() - gridSize)][convertPosToIndex(c.getYPos())] == 0;
 
 	}
 
@@ -376,7 +321,7 @@ public class GameController extends MyApplet {
 	 */
 	private boolean allowMovementRight(Character c) {
 		return c.getXPos() + gridSize <= 660
-				&& maze[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
+				&& mazePattern[convertPosToIndex(c.getXPos() + gridSize)][convertPosToIndex(c.getYPos())] == 0;
 
 	}
 
