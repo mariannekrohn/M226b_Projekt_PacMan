@@ -30,7 +30,7 @@ public class TestPacMan {
 		MyApplet window = Mockito.mock(MyApplet.class);
 		
 		xPos = 36;
-		yPos = 36;
+		yPos = 40;
 		height = 16;
 		width = 16;
 		score = 56;
@@ -53,13 +53,37 @@ public class TestPacMan {
 	}
 	
 	@Test
+	public void testGetXPos() {
+		assertEquals("should return original xPos(36)", xPos, p.getXPos());
+	}
+	
+	@Test
+	public void testSetXPos() {
+		p.setXPos(50);
+		
+		assertEquals("should get newly set xPos (50)", 50, p.getXPos());
+	}
+	
+	@Test
+	public void testGetYPos() {
+		assertEquals("should return original yPos(40)", yPos, p.getYPos());
+	}
+	
+	@Test
+	public void testSetYPos() {
+		p.setXPos(55);
+		
+		assertEquals("should get newly set yPos (55)", 55, p.getXPos());
+	}
+	
+	@Test
 	public void testGetHeight() {
-		assertEquals("should return orginal height(16)", height, p.getHeight());
+		assertEquals("should return original height(16)", height, p.getHeight());
 	}
 	
 	@Test
 	public void testGetWidth() {
-		assertEquals("should return origial width(16)", width, p.getWidth());
+		assertEquals("should return original width(16)", width, p.getWidth());
 	}
 	
 	

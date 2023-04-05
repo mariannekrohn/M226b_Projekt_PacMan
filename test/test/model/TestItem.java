@@ -31,11 +31,13 @@ public class TestItem {
 		int score = 5;
 		int value = 13;
 		
-		Mockito.mock(MyApplet.class);
+		MyApplet window = Mockito.mock(MyApplet.class);
+		
 		player = Mockito.mock(PacMan.class);
 			when(player.getXPos()).thenReturn(xPos);
 			when(player.getYPos()).thenReturn(yPos);
-			when(player.getScore()).thenReturn(score);
+			
+			player = new PacMan(window, xPos, yPos, 16, 16, score, 0);
 		
 		p = Mockito.mock(Point.class);
 			when(p.getXPos()).thenReturn(xPos);
@@ -50,19 +52,21 @@ public class TestItem {
 		points = new ArrayList<>();
 		points.add(p);
 		points.add(q);
-		
 	}
 
 	@Test
 	public void testRemoveItem() {
 		assertEquals("should return initial list size", 2, points.size());
+		assertEquals("should return initital player score", 5, player.getScore());
 		
 		Item.removeItem(points, player);
 		assertEquals("should remove one item from list", 1, points.size());
+		assertEquals("should add value of removed point to player score", 18, player.getScore());
 		
 		
 		Item.removeItem(points, player);
 		assertEquals("should remove second item from list", 0, points.size());	
+		assertEquals("shoudd add value of removed point to player score", 31, player.getScore());
 		
 	}
 	
