@@ -19,7 +19,6 @@ public class Point extends Item {
 	 */
 	public Point(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 5, 5, 5, 0xFFD99722);
-		
 	}
 	
 }

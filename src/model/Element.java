@@ -10,9 +10,10 @@ import controller.MyApplet;
  */
 public abstract class Element {
 	
+	public MyApplet window;
 	protected int xPos;
 	protected int yPos;
-	public MyApplet window;
+	
 	
 	/**
 	 * Konstruktor

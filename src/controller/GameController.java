@@ -16,7 +16,7 @@ import view.GameInfo;
 import view.Maze;
 
 /**
- * Verwaltet die Eigenschaften und Fähigkeitne der Spielkontrolle
+ * Verwaltet die Eigenschaften und Fähigkeiten der Spielkontrolle
  * 
  * @author Marianne Krohn
  */
@@ -24,7 +24,7 @@ public class GameController extends MyApplet {
 
 	private int[][] mazePattern;
 	private Maze m;
-	
+
 	private int x;
 	private int y;
 	private int gridSize;
@@ -40,29 +40,23 @@ public class GameController extends MyApplet {
 	private List<Item> powerPills;
 	private List<Item> fruit;
 
-	
-	
 	enum State {
 		START, PLAY, RESET, END_WIN, END_LOOSE
 	};
 
 	State gameState = State.START;
 
-	
-	
 	public static void main(String[] args) {
 		PApplet.main("controller.GameController");
 	}
 
-
-
 	public void settings() {
 		m = new Maze(this, 0, 0);
 		mazePattern = m.getMaze();
-		
+
 		y = mazePattern.length;
 		x = mazePattern[0].length;
-		
+
 		gridSize = 24;
 		size(y * gridSize, (x + 2) * gridSize);
 
@@ -101,7 +95,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Initialisiert alle Figuren und Gegenstände
 	 */
-	public void initializeGame() {
+	private void initializeGame() {
 		info = new GameInfo(this, y * gridSize, (x + 2) * gridSize);
 
 		player = new PacMan(this, 12, 468, 16, 16, -5, 3);
@@ -120,7 +114,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Zeichnet das Spielfeld mit Labyrinth und allen Figuren und Gegenständen
 	 */
-	public void drawGame() {
+	private void drawGame() {
 		collectItems();
 		removeLife();
 
@@ -132,8 +126,8 @@ public class GameController extends MyApplet {
 			fruit = new ArrayList<>();
 		}
 
-		player.draw();	
-		
+		player.draw();
+
 		drawGhosts();
 		moveGhosts();
 
@@ -145,14 +139,14 @@ public class GameController extends MyApplet {
 	 * Setzt alle Spielfiguren auf ihren Ausgangspunkt zurück, nachdem Pac-Man auf
 	 * einen Geist gestossen ist und reduziert das Leben des Spielers um 1
 	 */
-	public void drawReset() {
+	private void drawReset() {
 		player = new PacMan(this, 12, 468, 16, 16, player.getScore(), player.getLives() - 1);
 		player.draw();
 
 		ghosts = new ArrayList<>();
 		initializeGhosts();
 		drawGhosts();
-		
+
 		delay(500);
 		gameState = State.PLAY;
 	}
@@ -168,7 +162,41 @@ public class GameController extends MyApplet {
 	}
 
 	/**
-	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert die points ArrayList
+	 * Iteriert über die ghost ArrayList und zeichnet die enthaltenen Charaktere
+	 */
+	private void drawGhosts() {
+		for (Ghost e : ghosts) {
+			e.draw();
+		}
+	}
+	
+	/**
+	 * Bewegt die Geister in zufälliger Geschwindigkeit so auf dem Spielfeld, dass
+	 * sie Pac-Man verfolgen
+	 */
+	private void moveGhosts() {
+
+		for (Ghost g : ghosts) {
+			int random = (int) (10 + (Math.random() * 50));
+
+			if (counter % random == 0) {
+
+				if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
+					g.setYPos(g.getYPos() - step);
+				} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
+					g.setYPos(g.getYPos() + step);
+				} else if (allowMovementLeft(g) == true && player.getXPos() < g.getXPos()) {
+					g.setXPos(g.getXPos() - step);
+				} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
+					g.setXPos(g.getXPos() + step);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Positioniert Punkt-Objekte in jedem leeren Feld und initalisiert die points
+	 * ArrayList
 	 */
 	private void initializePointItems() {
 
@@ -205,17 +233,6 @@ public class GameController extends MyApplet {
 		Fruit fr = new Fruit(this, 12 + pos[random][0] * gridSize, 12 + pos[random][1] * gridSize);
 		fruit.add(fr);
 	}
-	
-	
-	/**
-	 * Iteriert über die ghost ArrayList und zeichnet die enthaltenen
-	 * Charaktere
-	 */
-	public void drawGhosts() {
-		for (Ghost e: ghosts) {
-			e.draw();
-		}
-	}
 
 	/**
 	 * Entfernt Gegenstände die Pac-Man einsammelt und addiert ihren Wert zum
@@ -226,7 +243,7 @@ public class GameController extends MyApplet {
 			gameState = State.END_WIN;
 			return;
 		}
-		
+
 		Item.removeItem(points, player);
 		Item.removeItem(powerPills, player);
 		Item.removeItem(fruit, player);
@@ -247,31 +264,6 @@ public class GameController extends MyApplet {
 				gameState = State.RESET;
 				break;
 			}
-		}
-	}
-
-
-	/**
-	 * Bewegt die Geister in zufälliger Geschwindigkeit so auf dem Spielfeld, dass
-	 * sie Pac-Man verfolgen
-	 */
-	private void moveGhosts() {
-		
-		for(Ghost g: ghosts) {
-		int random = (int) (10 + (Math.random() * 50));
-
-		if (counter % random == 0) {
-
-			if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
-				g.setYPos(g.getYPos() - step);
-			} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
-				g.setYPos(g.getYPos() + step);
-			} else if (allowMovementLeft(g) == true && player.getXPos() < g.getXPos()) {
-				g.setXPos(g.getXPos() - step);
-			} else if (allowMovementRight(g) == true && player.getXPos() > g.getXPos()) {
-				g.setXPos(g.getXPos() + step);
-			}
-		}
 		}
 	}
 

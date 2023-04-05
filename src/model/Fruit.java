@@ -19,7 +19,4 @@ public class Fruit extends Item{
 	public Fruit(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos, 14, 14, 200, 0xFF009000);
 	}
-
-
-
 }

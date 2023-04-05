@@ -27,6 +27,10 @@ public class PacMan extends Character implements Draw {
 		this.lives = lives;
 	}
 	
+	/**
+	 * Zeichnet den Pac-Man-Charakter in seiner typischen Form und Farbe
+	 */
+	
 	@Override
 	public void draw() {
 		window.fill(0xFFFFFF00);

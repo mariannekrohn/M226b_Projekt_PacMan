@@ -9,23 +9,13 @@ import controller.MyApplet;
  * @author Marianne Krohn
  *
  */
-public class Character extends Element {
+public abstract class Character extends Element {
 
 	private int color;
 	private int step;
 	private int height;
 	private int width;
 	
-	/**
-	 * 
-	 * @param window	MyApplet
-	 * @param xPos		x-Position des Charakters
-	 * @param yPos		y-Position des Charakters
-	 * @param height	Höhe des Charakaters
-	 * @param width		Breite des Charakters
-	 * @param name		Name des Charakters
-	 * @param color		Farbe des Charakters
-	 */
 	public Character(MyApplet window, int xPos, int yPos, int height, int width, String name, int color) {
 		super(window, xPos, yPos);
 		this.height = height;
@@ -33,14 +23,6 @@ public class Character extends Element {
 		this.color = color;
 		this.step = 24;
 	}
-
-//	@Override
-//	public void draw() {
-//		window.fill(color);
-//	//	get.Window(arc(xPos, yPos, height, height, 0, PI+QUARTER_PI, PIE);
-//		window.ellipse(xPos, yPos, height, height);
-//
-//	}
 
 	/**
 	 * Ermöglicht die Aufwärtsbewegung eines Charakters bis der obere Spielfeldrand
@@ -53,7 +35,7 @@ public class Character extends Element {
 	}
 
 	/**
-	 * Ermöglicht die Abwärtsbewegung eines Charakter bis der untere Spielfeldrand
+	 * Ermöglicht die Abwärtsbewegung eines Charakters bis der untere Spielfeldrand
 	 * erreicht ist.
 	 */
 	public void moveDown() {
@@ -63,7 +45,7 @@ public class Character extends Element {
 	}
 
 	/**
-	 * Ermöglicht die Linksbewegung eines Charakterss bis der linke Spielfeldrand
+	 * Ermöglicht die Linksbewegung eines Charakters bis der linke Spielfeldrand
 	 * erreicht ist.
 	 */
 	public void moveLeft() {
@@ -73,7 +55,7 @@ public class Character extends Element {
 	}
 
 	/**
-	 * Ermöglicht die Rechtsbewegung seines Charakter bis der rechte Spielfeldrand
+	 * Ermöglicht die Rechtsbewegung eines Charakter bis der rechte Spielfeldrand
 	 * erreicht ist.
 	 */
 	public void moveRight() {
@@ -81,8 +63,6 @@ public class Character extends Element {
 			xPos += step;
 		}
 	}
-	
-	
 	
 	public int getColor() {
 		return color;
