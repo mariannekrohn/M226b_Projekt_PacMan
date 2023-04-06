@@ -4,16 +4,19 @@ import controller.MyApplet;
 import model.Element;
 import processing.core.PConstants;
 
+/**
+ * Verwaltet die Eigenschaften und Fähigkeiten der Screens für die 
+ * unterschiedlichen GameStates
+ * @author Marianne Krohn
+ */
 public class GameInfo extends Element {
-	
 	private int gridSize;
 	
 	/**
-	 * Verwaltet die Eigenschafen und Fähigkeiten der informationsbasierten 
-	 * game state screens
-	 * @param window
-	 * @param xPos
-	 * @param yPos
+	 * Konstruktor
+	 * @param window PApplet
+	 * @param xPos x-Koordinaten des Info-Screens
+	 * @param yPos y-Koordinaten des Info-Screens
 	 */
 	public GameInfo(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos);
@@ -27,7 +30,6 @@ public class GameInfo extends Element {
 		window.fill(0, 0, 0, 150);
 		window.rect(0, 0, getYPos() * gridSize, (getXPos() + 2) * gridSize);
 		
-
 		window.textAlign(PConstants.CENTER);
 		window.textSize(20);
 		window.fill(190);
@@ -52,7 +54,6 @@ public class GameInfo extends Element {
 		window.textSize(20);
 		window.fill(190);
 		window.text("Press SPACE to Beat Your Highscore.", window.width / 2 , 335);
-
 	}
 
 	/**
@@ -68,7 +69,6 @@ public class GameInfo extends Element {
 		window.textSize(20);
 		window.fill(190);
 		window.text("Press SPACE to Try Again.", window.width / 2 , 335);
-
 	}
 
 }

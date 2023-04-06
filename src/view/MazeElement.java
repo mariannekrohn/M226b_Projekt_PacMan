@@ -6,7 +6,6 @@ import model.Element;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der einzelnen Felder bzw. Labyrinth-Elemente
- * 
  * @author Marianne Krohn
  */
 public class MazeElement extends Element implements Draw {
@@ -15,8 +14,8 @@ public class MazeElement extends Element implements Draw {
 	/**
 	 * Konstruktor
 	 * @param window PApplet
-	 * @param xPos x-Position des Feldes
-	 * @param yPos y-Position des Feldes
+	 * @param xPos x-Koordinaten des Feldes
+	 * @param yPos y-Koordinaten des Feldes
 	 */
 	public MazeElement(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos);
@@ -32,5 +31,4 @@ public class MazeElement extends Element implements Draw {
 		window.rect(xPos, yPos, gridSize, gridSize);
 	}
 	
-
 }

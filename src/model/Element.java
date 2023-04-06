@@ -9,17 +9,15 @@ import controller.MyApplet;
  *
  */
 public abstract class Element {
-	
 	public MyApplet window;
 	protected int xPos;
 	protected int yPos;
 	
-	
 	/**
 	 * Konstruktor
 	 * @param window
-	 * @param xPos x-Position des Elements
-	 * @param yPos y-Position des Elements
+	 * @param xPos x-Koordinaten des Elements
+	 * @param yPos y-Koordinaten des Elements
 	 */
 	public Element(MyApplet window, int xPos, int yPos) {
 		this.window = window;
@@ -29,7 +27,7 @@ public abstract class Element {
 	
 	/**
 	 * Berechnet den Abstand zwischen zwei Elementen
-	 * @return distance Distanz als pdouble
+	 * @return distance Distanz als double
 	 */
 	public static double calculateDistance(Element e1, Element e2) {
 		double distance = 0;
@@ -39,7 +37,6 @@ public abstract class Element {
 		distance = Math.sqrt(a * a + b * b);
 		return distance;
 	}
-	
 
 	public int getXPos() {
 		return xPos;

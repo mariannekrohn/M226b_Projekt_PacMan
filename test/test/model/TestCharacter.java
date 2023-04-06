@@ -64,7 +64,6 @@ public class TestCharacter {
 	public void testMoveDownLimit() {
 		p.moveDown();
 		p.moveDown();
-		
 
 		assertEquals("should move down once and then stay at position", yPos + step, p.getYPos());
 	}

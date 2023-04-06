@@ -10,15 +10,18 @@ import controller.MyApplet;
  *
  */
 public abstract class Item extends Element implements Draw {
-	
 	private int height;
 	private int value;
 	private int color;
 	
 	/**
 	 * Konstruktor
-	 * @param type Art des Gegenstandes
-	 * @param value Punkte-Wert des Gegenstandes
+	 * @param window PApplet
+	 * @param xPos x-Koordinaten des Gegenstandes
+	 * @param yPos y-Koordinaten des Gegenstandes
+	 * @param height Höhe des Gegenstandes (in px)
+	 * @param width Breite des Gegenstandes (in px)
+	 * @param value Punktewert des Gegenstandes
 	 * @param color Farbe des Gegenstandes
 	 */
 	public Item(MyApplet window, int xPos, int yPos, int height, int width, int value, int color) {
@@ -39,7 +42,7 @@ public abstract class Item extends Element implements Draw {
 
 	/**
 	 * Berechnet die Distanz zwischen Item und PacMan, entfernt das Objekt aus der
-	 * entsprechenden ArrayList und addiert ihre Wert zum Punktestand des Spielers
+	 * entsprechenden ArrayList und addiert seinen Wert zum Punktestand des Spielers
 	 *
 	 * @param list List von Items über die iteriert wird
 	 * @param player PacMan-Figur
@@ -53,9 +56,7 @@ public abstract class Item extends Element implements Draw {
 				player.setScore(player.getScore() + item.getValue());
 				return;
 			}
-		
 		}
-
 	}
 	
 	/**
@@ -70,4 +71,5 @@ public abstract class Item extends Element implements Draw {
 	public int getValue() {
 		return value;
 	}
+	
 }

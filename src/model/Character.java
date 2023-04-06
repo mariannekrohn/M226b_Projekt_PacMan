@@ -5,17 +5,25 @@ import controller.MyApplet;
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten welche alle Charaktere sich
  * teilen
- * 
  * @author Marianne Krohn
  *
  */
 public abstract class Character extends Element {
-
 	private int color;
 	private int step;
 	private int height;
 	private int width;
 	
+	/**
+	 * Konstruktor
+	 * @param window PApplet
+	 * @param xPos x-Koordinaten des Charakters
+	 * @param yPos y-Koordinaten des Charakters
+	 * @param height Höhe des Charakters (in px)
+	 * @param width Breite des Charakters (in px)
+	 * @param name Name des Charakters
+	 * @param color Farbe des Charakters
+	 */
 	public Character(MyApplet window, int xPos, int yPos, int height, int width, String name, int color) {
 		super(window, xPos, yPos);
 		this.height = height;
@@ -75,4 +83,5 @@ public abstract class Character extends Element {
 	public int getWidth() {
 		return width;
 	}
+	
 }

@@ -2,19 +2,29 @@ package view;
 
 import controller.MyApplet;
 
+/**
+ * Verwaltet die Eigenschaften und Fähigkeiten des Labyrinths
+ * @author Marianne Krohn
+ */
+
 public class Maze extends MazeElement {
 	private int gridSize;
 	private MazeElement[][] grid;
 	private int x;
 	private int y;
 	
+	/**
+	 * Konstruktor
+	 * @param window PApplet
+	 * @param xPos x-Koordinaten des Labyrinths
+	 * @param yPos y-Koordinaten des Labyrinths
+	 */
 	public Maze(MyApplet window, int xPos, int yPos) {
 		super(window, xPos, yPos);
 		this.gridSize = 24;
 		this.y = maze.length;
 		this.x = maze[0].length;
 		this.grid = new MazeElement[y][x];
-		
 	}
 
 	private int[][] maze = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -49,7 +59,7 @@ public class Maze extends MazeElement {
 
 
 	/**
-	 * Teilt das Spielfeld in ein Raster von 21x28 Feldern auf.
+	 * Teilt das Spielfeld in ein Raster von 23x28 Feldern auf.
 	 */
 	public void initializeGrid() {
 		for (int i = 0; i < y; i++) {
@@ -76,8 +86,4 @@ public class Maze extends MazeElement {
 		return maze;
 	}
 	
-
-	
-	
-
 }

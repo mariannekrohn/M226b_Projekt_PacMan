@@ -21,9 +21,13 @@ public class Ghost extends Character implements Draw {
 		super(window, xPos, yPos, 16, 16, name, color);
 	}
 	
+	/**
+	 * Zeichnet den Geist
+	 */
 	@Override
 	public void draw() {
 		window.fill(getColor());
 		window.ellipse(xPos, yPos, getHeight(), getHeight());
 	}	
+	
 }

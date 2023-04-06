@@ -17,7 +17,6 @@ import view.Maze;
 
 /**
  * Verwaltet die Eigenschaften und Fähigkeiten der Spielkontrolle
- * 
  * @author Marianne Krohn
  */
 public class GameController extends MyApplet {
@@ -175,12 +174,10 @@ public class GameController extends MyApplet {
 	 * sie Pac-Man verfolgen
 	 */
 	private void moveGhosts() {
-
 		for (Ghost g : ghosts) {
 			int random = (int) (10 + (Math.random() * 50));
 
 			if (counter % random == 0) {
-
 				if (allowMovementUp(g) == true && player.getYPos() < g.getYPos()) {
 					g.setYPos(g.getYPos() - step);
 				} else if (allowMovementDown(g) == true && player.getYPos() > g.getYPos()) {
@@ -199,7 +196,6 @@ public class GameController extends MyApplet {
 	 * ArrayList
 	 */
 	private void initializePointItems() {
-
 		for (int i = 0; i < y; i++) {
 			for (int j = 0; j < x; j++) {
 				if (mazePattern[i][j] == 0) {
@@ -267,6 +263,11 @@ public class GameController extends MyApplet {
 		}
 	}
 
+	/**
+	 * Rechnet die Koordinaten eines Elements in den entsprechenden Index um
+	 * @param pos Koordinate als int
+	 * @return Index als int
+	 */
 	private int convertPosToIndex(int pos) {
 		return (pos - 12) / gridSize;
 	}
@@ -274,7 +275,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Erlaubt Bewegung nach oben, wenn das oben angrenzende Feld nicht ausgefüllt
 	 * ist.
-	 * 
+	 * @param c Objekt der Klasse Character
 	 * @return boolean
 	 */
 	private boolean allowMovementUp(Character c) {
@@ -285,7 +286,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Erlaubt Bewegung nach unten, wenn das unten angrenzende Feld nicht ausgefüllt
 	 * ist.
-	 * 
+	 * @param c Objekt der Klasse Character
 	 * @return boolean
 	 */
 	private boolean allowMovementDown(Character c) {
@@ -296,7 +297,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Erlaubt Bewegung nach links, wenn das unten angrenzende Feld nicht ausgefüllt
 	 * ist.
-	 * 
+	 * @param c Objekt der Klasse Character
 	 * @return boolean
 	 */
 	private boolean allowMovementLeft(Character c) {
@@ -308,7 +309,7 @@ public class GameController extends MyApplet {
 	/**
 	 * Erlaubt Bewegung nach rechts, wenn das unten angrenzende Feld nicht
 	 * ausgefüllt ist.
-	 * 
+	 * @param c Objekt der Klasse Character
 	 * @return boolean
 	 */
 	private boolean allowMovementRight(Character c) {
@@ -354,7 +355,6 @@ public class GameController extends MyApplet {
 				initializeGame();
 			}
 		}
-
 	}
 
 }

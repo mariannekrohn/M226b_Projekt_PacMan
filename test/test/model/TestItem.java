@@ -22,7 +22,6 @@ public class TestItem {
 	Point p;
 	Point q;
 	int score;
-
 	
 	@Before
 	public void setup() {
@@ -67,7 +66,6 @@ public class TestItem {
 		Item.removeItem(points, player);
 		assertEquals("should remove second item from list", 0, points.size());	
 		assertEquals("shoudd add value of removed point to player score", 31, player.getScore());
-		
 	}
 	
 }

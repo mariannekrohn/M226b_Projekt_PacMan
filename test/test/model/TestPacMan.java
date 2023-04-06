@@ -86,7 +86,6 @@ public class TestPacMan {
 		assertEquals("should return original width(16)", width, p.getWidth());
 	}
 	
-	
 	@Test
 	public void testGetScore() {
 		assertEquals("should get original score (56)", score, p.getScore());
@@ -109,8 +108,6 @@ public class TestPacMan {
 		p.setLives(1);
 		
 		assertEquals("should get newly set number of lives (1)", 1, p.getLives());
-		
 	}
-
 
 }

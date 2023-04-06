@@ -6,20 +6,22 @@ import processing.core.PConstants;
 /**
  * Verwaltet die Eigenschaften und Funktionen der Pac-Man-Figur die vom Spieler
  * gesteuert wird.
- * 
  * @author Marianne Krohn
  *
  */
 public class PacMan extends Character implements Draw {
-
 	private int score;
 	private int lives;
 
 	/**
-	 * Konstruktor Setzt Punktezahl und Leben des Spielers auf ihre Standardwerte
-	 * und definiert die Bewegungsgrösse des Charakters
-	 * 
-	 * @param window
+	 * Konstruktor
+	 * @param window PApplet	
+	 * @param xPos x-Koordinaten der Pac-Man-Figur
+	 * @param yPos y-Koordinaten der Pac-Man-Figur
+	 * @param height Höhe der Pac-Man-Figur (in px)
+	 * @param width Breite der Pac-Man-Figur (in px)
+	 * @param score Punktezahl des Spielers
+	 * @param lives Leben des Spielers
 	 */
 	public PacMan(MyApplet window, int xPos, int yPos, int height, int width, int score, int lives) {
 		super(window, xPos, yPos, height, width, "Pac Man", 0xFFFFFF00);
@@ -30,7 +32,6 @@ public class PacMan extends Character implements Draw {
 	/**
 	 * Zeichnet den Pac-Man-Charakter in seiner typischen Form und Farbe
 	 */
-	
 	@Override
 	public void draw() {
 		window.fill(0xFFFFFF00);
@@ -66,5 +67,5 @@ public class PacMan extends Character implements Draw {
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
-
+	
 }
